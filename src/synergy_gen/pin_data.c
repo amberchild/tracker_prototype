@@ -1,0 +1,180 @@
+/* generated pin source file - do not edit */
+#include "r_ioport.h"
+#if defined(__ICCARM__)
+#pragma diag_suppress=Pa089
+#endif
+const ioport_pin_cfg_t g_bsp_pin_cfg_data[] = {
+	{
+		.pin = IOPORT_PORT_00_PIN_15,
+		.pin_cfg = (IOPORT_CFG_IRQ_ENABLE | IOPORT_CFG_PORT_DIRECTION_INPUT),
+	},
+	{
+		.pin = IOPORT_PORT_01_PIN_00,
+		.pin_cfg = (IOPORT_CFG_PERIPHERAL_PIN | IOPORT_PERIPHERAL_SCI0_2_4_6_8),
+	},
+	{
+		.pin = IOPORT_PORT_01_PIN_01,
+		.pin_cfg = (IOPORT_CFG_PERIPHERAL_PIN | IOPORT_PERIPHERAL_SCI0_2_4_6_8),
+	},
+	{
+		.pin = IOPORT_PORT_01_PIN_08,
+		.pin_cfg = (IOPORT_CFG_PERIPHERAL_PIN | IOPORT_PERIPHERAL_DEBUG),
+	},
+	{
+		.pin = IOPORT_PORT_01_PIN_09,
+		.pin_cfg = (IOPORT_CFG_PERIPHERAL_PIN | IOPORT_PERIPHERAL_DEBUG),
+	},
+	{
+		.pin = IOPORT_PORT_01_PIN_10,
+		.pin_cfg = (IOPORT_CFG_PERIPHERAL_PIN | IOPORT_PERIPHERAL_DEBUG),
+	},
+	{
+		.pin = IOPORT_PORT_01_PIN_11,
+		.pin_cfg = (IOPORT_CFG_DRIVE_MID | IOPORT_CFG_PORT_DIRECTION_OUTPUT | IOPORT_CFG_PORT_OUTPUT_LOW),
+	},
+	{
+		.pin = IOPORT_PORT_01_PIN_12,
+		.pin_cfg = (IOPORT_CFG_DRIVE_MID | IOPORT_CFG_PORT_DIRECTION_OUTPUT | IOPORT_CFG_PORT_OUTPUT_LOW),
+	},
+	{
+		.pin = IOPORT_PORT_01_PIN_13,
+		.pin_cfg = (IOPORT_CFG_DRIVE_MID | IOPORT_CFG_PORT_DIRECTION_OUTPUT | IOPORT_CFG_PORT_OUTPUT_LOW),
+	},
+	{
+		.pin = IOPORT_PORT_02_PIN_00,
+		.pin_cfg = (IOPORT_CFG_PORT_DIRECTION_INPUT),
+	},
+	{
+		.pin = IOPORT_PORT_02_PIN_01,
+		.pin_cfg = (IOPORT_CFG_PORT_DIRECTION_INPUT),
+	},
+	{
+		.pin = IOPORT_PORT_02_PIN_04,
+		.pin_cfg = (IOPORT_CFG_DRIVE_MID | IOPORT_CFG_PORT_DIRECTION_OUTPUT | IOPORT_CFG_PORT_OUTPUT_LOW),
+	},
+	{
+		.pin = IOPORT_PORT_02_PIN_05,
+		.pin_cfg = (IOPORT_CFG_DRIVE_MID | IOPORT_CFG_PORT_DIRECTION_OUTPUT | IOPORT_CFG_PORT_OUTPUT_LOW),
+	},
+	{
+		.pin = IOPORT_PORT_02_PIN_06,
+		.pin_cfg = (IOPORT_CFG_IRQ_ENABLE | IOPORT_CFG_PORT_DIRECTION_INPUT | IOPORT_CFG_PULLUP_ENABLE),
+	},
+	{
+		.pin = IOPORT_PORT_03_PIN_00,
+		.pin_cfg = (IOPORT_CFG_PERIPHERAL_PIN | IOPORT_PERIPHERAL_DEBUG),
+	},
+	{
+		.pin = IOPORT_PORT_03_PIN_01,
+		.pin_cfg = (IOPORT_CFG_NMOS_ENABLE | IOPORT_CFG_PERIPHERAL_PIN | IOPORT_PERIPHERAL_SCI0_2_4_6_8),
+	},
+	{
+		.pin = IOPORT_PORT_03_PIN_02,
+		.pin_cfg = (IOPORT_CFG_NMOS_ENABLE | IOPORT_CFG_PERIPHERAL_PIN | IOPORT_PERIPHERAL_SCI0_2_4_6_8),
+	},
+	{
+		.pin = IOPORT_PORT_03_PIN_03,
+		.pin_cfg = (IOPORT_CFG_PORT_DIRECTION_INPUT),
+	},
+	{
+		.pin = IOPORT_PORT_03_PIN_04,
+		.pin_cfg = (IOPORT_CFG_IRQ_ENABLE | IOPORT_CFG_PORT_DIRECTION_INPUT),
+	},
+	{
+		.pin = IOPORT_PORT_04_PIN_00,
+		.pin_cfg = (IOPORT_CFG_PORT_DIRECTION_OUTPUT | IOPORT_CFG_PORT_OUTPUT_HIGH),
+	},
+	{
+		.pin = IOPORT_PORT_04_PIN_01,
+		.pin_cfg = (IOPORT_CFG_PORT_DIRECTION_OUTPUT | IOPORT_CFG_PORT_OUTPUT_LOW),
+	},
+	{
+		.pin = IOPORT_PORT_04_PIN_02,
+		.pin_cfg = (IOPORT_CFG_PORT_DIRECTION_INPUT),
+	},
+	{
+		.pin = IOPORT_PORT_04_PIN_07,
+		.pin_cfg = (IOPORT_CFG_PERIPHERAL_PIN | IOPORT_PERIPHERAL_USB_FS),
+	},
+	{
+		.pin = IOPORT_PORT_05_PIN_00,
+		.pin_cfg = (IOPORT_CFG_PORT_DIRECTION_INPUT),
+	},
+	{
+		.pin = IOPORT_PORT_05_PIN_01,
+		.pin_cfg = (IOPORT_CFG_PORT_DIRECTION_INPUT),
+	},
+	{
+		.pin = IOPORT_PORT_05_PIN_02,
+		.pin_cfg = (IOPORT_CFG_PORT_DIRECTION_INPUT),
+	},
+};
+const ioport_cfg_t g_bsp_pin_cfg = {
+	.number_of_pins = sizeof(g_bsp_pin_cfg_data)/sizeof(ioport_pin_cfg_t),
+	.p_pin_cfg_data = &g_bsp_pin_cfg_data[0],
+};
+const ioport_pin_cfg_t low_pwr_config_data[] = {
+	{
+		.pin = IOPORT_PORT_00_PIN_15,
+		.pin_cfg = (IOPORT_CFG_IRQ_ENABLE | IOPORT_CFG_PORT_DIRECTION_INPUT),
+	},
+	{
+		.pin = IOPORT_PORT_01_PIN_08,
+		.pin_cfg = (IOPORT_CFG_PERIPHERAL_PIN | IOPORT_PERIPHERAL_DEBUG),
+	},
+	{
+		.pin = IOPORT_PORT_01_PIN_09,
+		.pin_cfg = (IOPORT_CFG_PERIPHERAL_PIN | IOPORT_PERIPHERAL_DEBUG),
+	},
+	{
+		.pin = IOPORT_PORT_01_PIN_10,
+		.pin_cfg = (IOPORT_CFG_PERIPHERAL_PIN | IOPORT_PERIPHERAL_DEBUG),
+	},
+	{
+		.pin = IOPORT_PORT_01_PIN_11,
+		.pin_cfg = (IOPORT_CFG_DRIVE_MID | IOPORT_CFG_PORT_DIRECTION_OUTPUT | IOPORT_CFG_PORT_OUTPUT_LOW),
+	},
+	{
+		.pin = IOPORT_PORT_01_PIN_12,
+		.pin_cfg = (IOPORT_CFG_DRIVE_MID | IOPORT_CFG_PORT_DIRECTION_OUTPUT | IOPORT_CFG_PORT_OUTPUT_LOW),
+	},
+	{
+		.pin = IOPORT_PORT_01_PIN_13,
+		.pin_cfg = (IOPORT_CFG_DRIVE_MID | IOPORT_CFG_PORT_DIRECTION_OUTPUT | IOPORT_CFG_PORT_OUTPUT_LOW),
+	},
+	{
+		.pin = IOPORT_PORT_02_PIN_04,
+		.pin_cfg = (IOPORT_CFG_DRIVE_MID | IOPORT_CFG_PORT_DIRECTION_OUTPUT | IOPORT_CFG_PORT_OUTPUT_HIGH),
+	},
+	{
+		.pin = IOPORT_PORT_02_PIN_05,
+		.pin_cfg = (IOPORT_CFG_DRIVE_MID | IOPORT_CFG_PORT_DIRECTION_OUTPUT | IOPORT_CFG_PORT_OUTPUT_HIGH),
+	},
+	{
+		.pin = IOPORT_PORT_02_PIN_06,
+		.pin_cfg = (IOPORT_CFG_IRQ_ENABLE | IOPORT_CFG_PORT_DIRECTION_INPUT | IOPORT_CFG_PULLUP_ENABLE),
+	},
+	{
+		.pin = IOPORT_PORT_03_PIN_00,
+		.pin_cfg = (IOPORT_CFG_PERIPHERAL_PIN | IOPORT_PERIPHERAL_DEBUG),
+	},
+	{
+		.pin = IOPORT_PORT_03_PIN_04,
+		.pin_cfg = (IOPORT_CFG_IRQ_ENABLE | IOPORT_CFG_PORT_DIRECTION_INPUT),
+	},
+	{
+		.pin = IOPORT_PORT_04_PIN_00,
+		.pin_cfg = (IOPORT_CFG_DRIVE_MID | IOPORT_CFG_PORT_DIRECTION_OUTPUT | IOPORT_CFG_PORT_OUTPUT_LOW),
+	},
+	{
+		.pin = IOPORT_PORT_04_PIN_01,
+		.pin_cfg = (IOPORT_CFG_DRIVE_MID | IOPORT_CFG_PORT_DIRECTION_OUTPUT | IOPORT_CFG_PORT_OUTPUT_HIGH),
+	},
+};
+const ioport_cfg_t low_pwr_config = {
+	.number_of_pins = sizeof(low_pwr_config_data)/sizeof(ioport_pin_cfg_t),
+	.p_pin_cfg_data = &low_pwr_config_data[0],
+};
+#if defined(__ICCARM__)
+#pragma diag_default=Pa089
+#endif

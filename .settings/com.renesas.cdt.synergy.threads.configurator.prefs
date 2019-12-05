@@ -1,0 +1,12 @@
+collapse/module.driver.i2c_on_sci_i2c.295398344=false
+collapse/module.driver.uart_on_sci_uart.629024527=false
+collapse/module.framework.sf_comms_on_sf_uart_comms.473128970=false
+collapse/module.framework.sf_i2c_bus_on_sf_i2c_v2.1785859700=false
+collapse/module.framework.sf_i2c_on_sf_i2c_v2.1054056265=false
+collapse/module.framework.sf_i2c_on_sf_i2c_v2.1299169010=true
+collapse/module.framework.sf_i2c_on_sf_i2c_v2.1413731321=false
+collapse/module.framework.sf_i2c_on_sf_i2c_v2.1640132471=false
+collapse/module.framework.sf_power_profiles_v2_common_on_sf_power_profiles_v2.1649434992=false
+collapse/module.framework.sf_power_profiles_v2_low_power_on_sf_power_profiles_v2.1812410776=false
+collapse/module.framework.sf_power_profiles_v2_run_on_sf_power_profiles_v2.236505881=false
+eclipse.preferences.version=1

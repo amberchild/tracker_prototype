@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<synergyConfiguration version="4">
+  <generalSettings>
+    <option key="#Board#" value="board.custom"/>
+    <option key="CPU" value="S3A7"/>
+    <option key="#TargetName#" value="R7FS3A77C3A01CNB"/>
+    <option key="#TargetARCHITECTURE#" value="cortex-m4"/>
+    <option key="#RTOS#" value="Express Logic ThreadX"/>
+    <option key="#pinconfiguration#" value="low_power_pin_config.pincfg"/>
+    <option key="#SSPVersion#" value="1.7.0"/>
+    <option key="#DefaultLinkerScript#" value="s3a7.ld"/>
+    <option key="#SELECTED_TOOLCHAIN#" value="gcc-arm-embedded"/>
+  </generalSettings>
+  <synergyBspConfiguration>
+    <config id="config.bsp.s3a7.R7FS3A77C3A01CNB">
+      <property id="config.bsp.part_number" value="config.bsp.part_number.value"/>
+      <property id="config.bsp.rom_size_bytes" value="config.bsp.rom_size_bytes.value"/>
+      <property id="config.bsp.ram_size_bytes" value="config.bsp.ram_size_bytes.value"/>
+      <property id="config.bsp.data_flash_size_bytes" value="config.bsp.data_flash_size_bytes.value"/>
+      <property id="config.bsp.package_style" value="config.bsp.package_style.value"/>
+      <property id="config.bsp.package_pins" value="config.bsp.package_pins.value"/>
+    </config>
+    <config id="config.bsp.s3a7">
+      <property id="config.bsp.series" value="config.bsp.series.value"/>
+    </config>
+    <config id="config.bsp.s3a7.ssp">
+      <property id="config.bsp.s3a7.ssp.OFS0" value="config.bsp.s3a7.ssp.OFS0_Register.default"/>
+      <property id="config.bsp.s3a7.ssp.OFS0.iwdt_start_mode" value="config.bsp.s3a7.ssp.OFS0.iwdt_start_mode.disabled"/>
+      <property id="config.bsp.s3a7.ssp.OFS0.iwdt_timeout" value="config.bsp.s3a7.ssp.OFS0.iwdt_timeout.2048"/>
+      <property id="config.bsp.s3a7.ssp.OFS0.iwdt_divisor" value="config.bsp.s3a7.ssp.OFS0.iwdt_divisor.128"/>
+      <property id="config.bsp.s3a7.ssp.OFS0.iwdt_window_end" value="config.bsp.s3a7.ssp.OFS0.iwdt_window_end.0"/>
+      <property id="config.bsp.s3a7.ssp.OFS0.iwdt_window_start" value="config.bsp.s3a7.ssp.OFS0.iwdt_window_start.100"/>
+      <property id="config.bsp.s3a7.ssp.OFS0.iwdt_reset_interrupt" value="config.bsp.s3a7.ssp.OFS0.iwdt_reset_interrupt.Reset"/>
+      <property id="config.bsp.s3a7.ssp.OFS0.iwdt_stop_control" value="config.bsp.s3a7.ssp.OFS0.iwdt_stop_control.stops"/>
+      <property id="config.bsp.s3a7.ssp.OFS0.wdt_start_mode" value="config.bsp.s3a7.ssp.OFS0.wdt_start_mode.register"/>
+      <property id="config.bsp.s3a7.ssp.OFS0.wdt_timeout" value="config.bsp.s3a7.ssp.OFS0.wdt_timeout.16384"/>
+      <property id="config.bsp.s3a7.ssp.OFS0.wdt_divisor" value="config.bsp.s3a7.ssp.OFS0.wdt_divisor.128"/>
+      <property id="config.bsp.s3a7.ssp.OFS0.wdt_window_end" value="config.bsp.s3a7.ssp.OFS0.wdt_window_end.0"/>
+      <property id="config.bsp.s3a7.ssp.OFS0.wdt_window_start" value="config.bsp.s3a7.ssp.OFS0.wdt_window_start.100"/>
+      <property id="config.bsp.s3a7.ssp.OFS0.wdt_reset_interrupt" value="config.bsp.s3a7.ssp.OFS0.wdt_reset_interrupt.Reset"/>
+      <property id="config.bsp.s3a7.ssp.OFS0.wdt_stop_control" value="config.bsp.s3a7.ssp.OFS0.wdt_stop_control.stops"/>
+      <property id="config.bsp.s3a7.ssp.OFS1" value="config.bsp.s3a7.ssp.OFS1_Register.default"/>
+      <property id="config.bsp.s3a7.ssp.OFS1.voltage_detection0.start" value="config.bsp.s3a7.ssp.OFS1.voltage_detection0.start.disabled"/>
+      <property id="config.bsp.s3a7.ssp.OFS1.voltage_detection0_level" value="config.bsp.s3a7.ssp.OFS1.voltage_detection0_level.190"/>
+      <property id="config.bsp.s3a7.ssp.OFS1.hoco_osc" value="config.bsp.s3a7.ssp.OFS1.hoco_osc.enabled"/>
+      <property id="config.bsp.s3a7.ssp.mpu_pc0_enable" value="config.bsp.s3a7.ssp.mpu_pc0_enable.disabled"/>
+      <property id="config.bsp.s3a7.ssp.mpu_pc0_start" value="0x000FFFFC"/>
+      <property id="config.bsp.s3a7.ssp.mpu_pc0_end" value="0x000FFFFF"/>
+      <property id="config.bsp.s3a7.ssp.mpu_pc1_enable" value="config.bsp.s3a7.ssp.mpu_pc1_enable.disabled"/>
+      <property id="config.bsp.s3a7.ssp.mpu_pc1_start" value="0x000FFFFC"/>
+      <property id="config.bsp.s3a7.ssp.mpu_pc1_end" value="0x000FFFFF"/>
+      <property id="config.bsp.s3a7.ssp.mpu_reg0_enable" value="config.bsp.s3a7.ssp.mpu_reg0_enable.disabled"/>
+      <property id="config.bsp.s3a7.ssp.mpu_reg0_start" value="0x000FFFFC"/>
+      <property id="config.bsp.s3a7.ssp.mpu_reg0_end" value="0x000FFFFF"/>
+    </config>
+    <config id="config.bsp.synergy">
+      <property id="config.bsp.common.main" value="0x800"/>
+      <property id="config.bsp.common.process" value="0"/>
+      <property id="config.bsp.common.heap" value="0x1000"/>
+      <property id="config.bsp.common.vcc" value="3300"/>
+      <property id="config.bsp.common.avcc0" value="3300"/>
+      <property id="config.bsp.common.checking" value="config.bsp.common.checking.enabled"/>
+      <property id="config.bsp.common.assert" value="config.bsp.common.assert.none"/>
+      <property id="config.bsp.common.error_log" value="config.bsp.common.error_log.none"/>
+      <property id="config.bsp.common.id_mode" value="config.bsp.common.id_mode.unlocked"/>
+      <property id="config.bsp.common.id_code" value="FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"/>
+      <property id="config.bsp.common.id1" value=""/>
+      <property id="config.bsp.common.id2" value=""/>
+      <property id="config.bsp.common.id3" value=""/>
+      <property id="config.bsp.common.id4" value=""/>
+      <property id="config.bsp.common.id_fixed" value=""/>
+    </config>
+  </synergyBspConfiguration>
+  <synergyClockConfiguration>
+    <node id="board.clock.xtal.freq" mul="12000000" option="_edit"/>
+    <node id="board.clock.pll.source" option="board.clock.pll.source.xtal"/>
+    <node id="board.clock.hoco.freq" option="board.clock.hoco.freq.24m"/>
+    <node id="board.clock.loco.freq" option="board.clock.loco.freq.32768"/>
+    <node id="board.clock.moco.freq" option="board.clock.moco.freq.8m"/>
+    <node id="board.clock.subclk.freq" option="board.clock.subclk.freq.32768"/>
+    <node id="board.clock.pll.div" option="board.clock.pll.div.2"/>
+    <node id="board.clock.pll.mul" option="board.clock.pll.mul.8"/>
+    <node id="board.clock.pll.display" option="board.clock.pll.display.value"/>
+    <node id="board.clock.clock.source" option="board.clock.clock.source.pll"/>
+    <node id="board.clock.iclk.div" option="board.clock.iclk.div.1"/>
+    <node id="board.clock.iclk.display" option="board.clock.iclk.display.value"/>
+    <node id="board.clock.pclka.div" option="board.clock.pclka.div.1"/>
+    <node id="board.clock.pclka.display" option="board.clock.pclka.display.value"/>
+    <node id="board.clock.pclkb.div" option="board.clock.pclkb.div.2"/>
+    <node id="board.clock.pclkb.display" option="board.clock.pclkb.display.value"/>
+    <node id="board.clock.pclkc.div" option="board.clock.pclkc.div.1"/>
+    <node id="board.clock.pclkc.display" option="board.clock.pclkc.display.value"/>
+    <node id="board.clock.pclkd.div" option="board.clock.pclkd.div.1"/>
+    <node id="board.clock.pclkd.display" option="board.clock.pclkd.display.value"/>
+    <node id="board.clock.bclk.div" option="board.clock.bclk.div.2"/>
+    <node id="board.clock.bclk.display" option="board.clock.bclk.display.value"/>
+    <node id="board.clock.bclkout.div" option="board.clock.bclkout.div.2"/>
+    <node id="board.clock.bclkout.display" option="board.clock.bclkout.display.value"/>
+    <node id="board.clock.fclk.div" option="board.clock.fclk.div.2"/>
+    <node id="board.clock.fclk.display" option="board.clock.fclk.display.value"/>
+    <node id="board.clock.uclk.display" option="board.clock.uclk.display.value"/>
+  </synergyClockConfiguration>
+  <synergyComponentSelection>
+    <component apiversion="" class="BSP" condition="" group="s3a7" subgroup="device" variant="R7FS3A77C3A01CNB" vendor="Renesas" version="1.7.0">
+      <description>Board support package for R7FS3A77C3A01CNB</description>
+      <originalPack>Renesas.Synergy_mcu_s3a7.1.7.0.pack</originalPack>
+    </component>
+    <component apiversion="" class="BSP" condition="" group="s3a7" subgroup="device" variant="" vendor="Renesas" version="1.7.0">
+      <description>Board support package for S3A7</description>
+      <originalPack>Renesas.Synergy_mcu_s3a7.1.7.0.pack</originalPack>
+    </component>
+    <component apiversion="" class="BSP" condition="" group="s3a7" subgroup="ssp" variant="" vendor="Renesas" version="1.7.0">
+      <description>Board support package for S3A7</description>
+      <originalPack>Renesas.Synergy_mcu_s3a7.1.7.0.pack</originalPack>
+    </component>
+    <component apiversion="" class="Common" condition="" group="all" subgroup="ssp_common" variant="" vendor="Renesas" version="1.7.0">
+      <description>SSP Common Code</description>
+      <originalPack>Renesas.Synergy.1.7.0.pack</originalPack>
+    </component>
+    <component apiversion="" class="HAL Drivers" condition="" group="all" subgroup="r_cgc" variant="" vendor="Renesas" version="1.7.0">
+      <description>Clock Generation Circuit: Provides=[CGC]</description>
+      <originalPack>Renesas.Synergy.1.7.0.pack</originalPack>
+    </component>
+    <component apiversion="" class="HAL Drivers" condition="" group="all" subgroup="r_elc" variant="" vendor="Renesas" version="1.7.0">
+      <description>Event Link Controller: Provides=[ELC]</description>
+      <originalPack>Renesas.Synergy.1.7.0.pack</originalPack>
+    </component>
+    <component apiversion="" class="HAL Drivers" condition="" group="all" subgroup="r_fmi" variant="" vendor="Renesas" version="1.7.0">
+      <description>Factory MCU Information Module: Provides=[FMI]</description>
+      <originalPack>Renesas.Synergy.1.7.0.pack</originalPack>
+    </component>
+    <component apiversion="" class="HAL Drivers" condition="" group="all" subgroup="r_ioport" variant="" vendor="Renesas" version="1.7.0">
+      <description>I/O Port: Provides=[IO Port]</description>
+      <originalPack>Renesas.Synergy.1.7.0.pack</originalPack>
+    </component>
+    <component apiversion="" class="BSP" condition="" group="Board" subgroup="custom" variant="" vendor="Renesas" version="1.7.0">
+      <description>CUSTOM Board Support Files</description>
+      <originalPack>Renesas.Synergy_board_custom.1.7.0.pack</originalPack>
+    </component>
+    <component apiversion="" class="Framework Services" condition="" group="all" subgroup="sf_i2c" variant="" vendor="Renesas" version="1.7.0">
+      <description>Framework I2C: Provides=[Framework I2C] , Requires=[ThreadX ,I2C]</description>
+      <originalPack>Renesas.Synergy.1.7.0.pack</originalPack>
+    </component>
+    <component apiversion="" class="Framework Services" condition="" group="all" subgroup="sf_power_profiles_v2" variant="" vendor="Renesas" version="1.7.0">
+      <description>Framework Power Profiles V2: Provides=[Framework Power Profiles V2] , Requires=[Power Profiles V2 Run ,Power Profiles V2 Sleep]</description>
+      <originalPack>Renesas.Synergy.1.7.0.pack</originalPack>
+    </component>
+    <component apiversion="" class="Framework Services" condition="" group="all" subgroup="sf_uart_comms" variant="" vendor="Renesas" version="1.7.0">
+      <description>Framework UART Communications: Provides=[Framework UART] , Requires=[ThreadX ,Communications]</description>
+      <originalPack>Renesas.Synergy.1.7.0.pack</originalPack>
+    </component>
+    <component apiversion="" class="HAL Drivers" condition="" group="all" subgroup="r_agt" variant="" vendor="Renesas" version="1.7.0">
+      <description>Asynchronous General Purpose Timer: Provides=[TIMER]</description>
+      <originalPack>Renesas.Synergy.1.7.0.pack</originalPack>
+    </component>
+    <component apiversion="" class="HAL Drivers" condition="" group="all" subgroup="r_crc" variant="" vendor="Renesas" version="1.7.0">
+      <description>Cyclic Redundancy Check: Provides=[CRC]</description>
+      <originalPack>Renesas.Synergy.1.7.0.pack</originalPack>
+    </component>
+    <component apiversion="" class="HAL Drivers" condition="" group="all" subgroup="r_dtc" variant="" vendor="Renesas" version="1.7.0">
+      <description>Data Transfer Controller: Provides=[Transfer]</description>
+      <originalPack>Renesas.Synergy.1.7.0.pack</originalPack>
+    </component>
+    <component apiversion="" class="HAL Drivers" condition="" group="all" subgroup="r_flash_lp" variant="" vendor="Renesas" version="1.7.0">
+      <description>Flash Memory: Provides=[Flash]</description>
+      <originalPack>Renesas.Synergy.1.7.0.pack</originalPack>
+    </component>
+    <component apiversion="" class="HAL Drivers" condition="" group="all" subgroup="r_icu" variant="" vendor="Renesas" version="1.7.0">
+      <description>External IRQ: Provides=[External IRQ]</description>
+      <originalPack>Renesas.Synergy.1.7.0.pack</originalPack>
+    </component>
+    <component apiversion="" class="HAL Drivers" condition="" group="all" subgroup="r_lpmv2_s3a7" variant="" vendor="Renesas" version="1.7.0">
+      <description>Low Power Module V2 for S3A7: Provides=[LPMV2]</description>
+      <originalPack>Renesas.Synergy.1.7.0.pack</originalPack>
+    </component>
+    <component apiversion="" class="HAL Drivers" condition="" group="all" subgroup="r_rtc" variant="" vendor="Renesas" version="1.7.0">
+      <description>Real Time Clock: Provides=[RTC]</description>
+      <originalPack>Renesas.Synergy.1.7.0.pack</originalPack>
+    </component>
+    <component apiversion="" class="HAL Drivers" condition="" group="all" subgroup="r_sci_i2c" variant="" vendor="Renesas" version="1.7.0">
+      <description>SCI I2C: Provides=[I2C Master] , Requires=[SCI Common]</description>
+      <originalPack>Renesas.Synergy.1.7.0.pack</originalPack>
+    </component>
+    <component apiversion="" class="HAL Drivers" condition="" group="all" subgroup="r_sci_uart" variant="" vendor="Renesas" version="1.7.0">
+      <description>SCI UART: Provides=[UART] , Requires=[SCI Common]</description>
+      <originalPack>Renesas.Synergy.1.7.0.pack</originalPack>
+    </component>
+    <component apiversion="" class="Express Logic" condition="" group="all" subgroup="tx" variant="" vendor="Renesas" version="1.7.0">
+      <description>Express Logic ThreadX: Provides=[ThreadX]</description>
+      <originalPack>Renesas.Synergy.1.7.0.pack</originalPack>
+    </component>
+  </synergyComponentSelection>
+  <synergyIcuConfiguration/>
+  <synergyMessagingConfiguration/>
+  <synergyModuleConfiguration>
+    <module id="module.driver.cgc_on_cgc.0">
+      <property id="module.driver.cgc.name" value="g_cgc"/>
+    </module>
+    <module id="module.driver.elc_on_elc.0">
+      <property id="module.driver.elc.name" value="g_elc"/>
+    </module>
+    <module id="module.driver.ioport_on_ioport.0">
+      <property id="module.driver.ioport.name" value="g_ioport"/>
+    </module>
+    <module id="module.driver.fmi_on_fmi.0">
+      <property id="module.driver.fmi.name" value="g_fmi"/>
+    </module>
+    <module id="module.driver.rtc_on_rtc.2069130906">
+      <property id="module.driver.rtc.name" value="g_rtc0"/>
+      <property id="module.driver.rtc.clock_source" value="module.driver.rtc.clock_source.clock_source_subclk"/>
+      <property id="module.driver.rtc.auto_configure" value="module.driver.rtc.auto_configure.disabled"/>
+      <property id="module.driver.rtc.error_adjustment_value" value="0"/>
+      <property id="module.driver.rtc.error_adjustment_type" value="module.driver.rtc.error_adjustment_type.error_adjustment_none"/>
+      <property id="module.driver.rtc.p_callback" value="rtc_alarm_callback"/>
+      <property id="module.driver.rtc.alarm_ipl" value="board.icu.common.irq.priority0"/>
+      <property id="module.driver.rtc.periodic_ipl" value="board.icu.common.irq.disabled"/>
+      <property id="module.driver.rtc.carry_ipl" value="board.icu.common.irq.priority1"/>
+    </module>
+    <module id="module.driver.timer_on_agt.1152927623">
+      <property id="module.driver.timer.name" value="g_modem_timer"/>
+      <property id="module.driver.timer.channel" value="0"/>
+      <property id="module.driver.timer.mode" value="module.driver.timer.mode.mode_periodic"/>
+      <property id="module.driver.timer.period" value="10"/>
+      <property id="module.driver.timer.unit" value="module.driver.timer.unit.unit_period_msec"/>
+      <property id="module.driver.timer.autostart" value="module.driver.timer.autostart.true"/>
+      <property id="module.driver.timer.count_source" value="module.driver.timer.count_source.clock_pclkb"/>
+      <property id="module.driver.timer.agto_output_enabled" value="module.driver.timer.agto_output_enabled.false"/>
+      <property id="module.driver.timer.agtio_output_enabled" value="module.driver.timer.agtio_output_enabled.false"/>
+      <property id="module.driver.timer.output_inverted" value="module.driver.timer.output_inverted.false"/>
+      <property id="module.driver.timer.agtoa_output_enable" value="module.driver.timer.agtoa_output_enable.false"/>
+      <property id="module.driver.timer.agtob_output_enable" value="module.driver.timer.agtob_output_enable.false"/>
+      <property id="module.driver.timer.p_callback" value="g_modem_timer_callback"/>
+      <property id="module.driver.timer.irq_ipl" value="board.icu.common.irq.priority1"/>
+    </module>
+    <module id="module.driver.external_irq_on_icu.444035099">
+      <property id="module.driver.external_irq.name" value="g_external_irq0"/>
+      <property id="module.driver.external_irq.channel" value="0"/>
+      <property id="module.driver.external_irq.trigger" value="module.driver.external_irq.trigger.trig_falling"/>
+      <property id="module.driver.external_irq.filter_enable" value="module.driver.external_irq.filter_enable.true"/>
+      <property id="module.driver.external_irq.pclk_div" value="module.driver.external_irq.pclk_div.pclk_div_by_64"/>
+      <property id="module.driver.external_irq.interrupt_enable" value="module.driver.external_irq.interrupt_enable.true"/>
+      <property id="module.driver.external_irq.p_callback" value="button_callback"/>
+      <property id="module.driver.external_irq.irq_ipl" value="board.icu.common.irq.priority6"/>
+    </module>
+    <module id="module.framework.sf_power_profiles_v2_low_power_on_sf_power_profiles_v2.1812410776">
+      <property id="module.framework.sf_power_profiles_v2_low_power.name" value="g_sf_power_profiles_v2_low_power_0"/>
+      <property id="module.framework.sf_power_profiles_v2_low_power.p_callback" value="lpm_callback"/>
+      <property id="module.framework.sf_power_profiles_v2_low_power.pin_table_enter" value="low_pwr_config"/>
+      <property id="module.framework.sf_power_profiles_v2_low_power.pin_table_exit" value="g_bsp_pin_cfg"/>
+    </module>
+    <module id="module.framework.sf_power_profiles_v2_common_on_sf_power_profiles_v2.1649434992">
+      <property id="module.framework.sf_power_profiles_v2_common.name" value="g_sf_power_profiles_v2_common"/>
+      <property id="module.framework.sf_power_profiles_v2.init" value="module.framework.sf_power_profiles_v2.init.enable"/>
+      <property id="module.framework.sf_power_profiles_v2.init_function" value="sf_power_profiles_v2_init0"/>
+    </module>
+    <module id="module.driver.lpmv2_common_on_lpmv2_s3a7.437359715">
+      <property id="module.driver.lpmv2_common.name" value="g_lpmv2_common"/>
+    </module>
+    <module id="module.driver.lpmv2_s3a7_standby.663673926">
+      <property id="module.driver.lpmv2.name" value="g_lpmv2_standby0"/>
+      <property id="module.driver.lpmv2.low_power_mode" value="module.driver.lpmv2.low_power_mode.LPMV2_LOW_POWER_MODE_STANDBY"/>
+      <property id="module.driver.lpmv2.output_port_enable_standby" value="module.driver.lpmv2.output_port_enable_standby.no_change"/>
+      <property id="module.driver.lpmv2.standby_wake_section" value="module.driver.lpmv2.standby_wake_section.heading"/>
+      <property id="module.driver.lpmv2.standby_wake_IRQ0" value="module.driver.lpmv2.standby_wake_IRQ0.enable"/>
+      <property id="module.driver.lpmv2.standby_wake_IRQ1" value="module.driver.lpmv2.standby_wake_IRQ1.disable"/>
+      <property id="module.driver.lpmv2.standby_wake_IRQ2" value="module.driver.lpmv2.standby_wake_IRQ2.disable"/>
+      <property id="module.driver.lpmv2.standby_wake_IRQ3" value="module.driver.lpmv2.standby_wake_IRQ3.disable"/>
+      <property id="module.driver.lpmv2.standby_wake_IRQ4" value="module.driver.lpmv2.standby_wake_IRQ4.disable"/>
+      <property id="module.driver.lpmv2.standby_wake_IRQ5" value="module.driver.lpmv2.standby_wake_IRQ5.disable"/>
+      <property id="module.driver.lpmv2.standby_wake_IRQ6" value="module.driver.lpmv2.standby_wake_IRQ6.disable"/>
+      <property id="module.driver.lpmv2.standby_wake_IRQ7" value="module.driver.lpmv2.standby_wake_IRQ7.disable"/>
+      <property id="module.driver.lpmv2.standby_wake_IRQ8" value="module.driver.lpmv2.standby_wake_IRQ8.disable"/>
+      <property id="module.driver.lpmv2.standby_wake_IRQ9" value="module.driver.lpmv2.standby_wake_IRQ9.enable"/>
+      <property id="module.driver.lpmv2.standby_wake_IRQ10" value="module.driver.lpmv2.standby_wake_IRQ10.disable"/>
+      <property id="module.driver.lpmv2.standby_wake_IRQ11" value="module.driver.lpmv2.standby_wake_IRQ11.disable"/>
+      <property id="module.driver.lpmv2.standby_wake_IRQ12" value="module.driver.lpmv2.standby_wake_IRQ12.disable"/>
+      <property id="module.driver.lpmv2.standby_wake_IRQ13" value="module.driver.lpmv2.standby_wake_IRQ13.enable"/>
+      <property id="module.driver.lpmv2.standby_wake_IRQ14" value="module.driver.lpmv2.standby_wake_IRQ14.disable"/>
+      <property id="module.driver.lpmv2.standby_wake_IRQ15" value="module.driver.lpmv2.standby_wake_IRQ15.disable"/>
+      <property id="module.driver.lpmv2.standby_wake_iwdt" value="module.driver.lpmv2.standby_wake_iwdt.disable"/>
+      <property id="module.driver.lpmv2.standby_wake_key" value="module.driver.lpmv2.standby_wake_key.disable"/>
+      <property id="module.driver.lpmv2.standby_wake_lvd1" value="module.driver.lpmv2.standby_wake_lvd1.disable"/>
+      <property id="module.driver.lpmv2.standby_wake_lvd2" value="module.driver.lpmv2.standby_wake_lvd2.disable"/>
+      <property id="module.driver.lpmv2.standby_wake_vbatt" value="module.driver.lpmv2.standby_wake_vbatt.disable"/>
+      <property id="module.driver.lpmv2.standby_wake_ACMPLP0" value="module.driver.lpmv2.standby_wake_ACMPLP0.disable"/>
+      <property id="module.driver.lpmv2.standby_wake_RTCALM" value="module.driver.lpmv2.standby_wake_RTCALM.enable"/>
+      <property id="module.driver.lpmv2.standby_wake_RTCPRD" value="module.driver.lpmv2.standby_wake_RTCPRD.disable"/>
+      <property id="module.driver.lpmv2.standby_wake_USBFS" value="module.driver.lpmv2.standby_wake_USBFS.disable"/>
+      <property id="module.driver.lpmv2.standby_wake_AGT1UD" value="module.driver.lpmv2.standby_wake_AGT1UD.disable"/>
+      <property id="module.driver.lpmv2.standby_wake_AGT1CA" value="module.driver.lpmv2.standby_wake_AGT1CA.disable"/>
+      <property id="module.driver.lpmv2.standby_wake_AGT1CB" value="module.driver.lpmv2.standby_wake_AGT1CB.disable"/>
+      <property id="module.driver.lpmv2.standby_wake_IIC0" value="module.driver.lpmv2.standby_wake_IIC0.disable"/>
+      <property id="module.driver.lpmv2.snooze_entry_section" value="module.driver.lpmv2.snooze_entry_section.heading"/>
+      <property id="module.driver.lpmv2.snooze_request" value="module.driver.lpmv2.snooze_request.LPMV2_SNOOZE_REQUEST_RXD0_FALLING"/>
+      <property id="module.driver.lpmv2.snooze_exit_section" value="module.driver.lpmv2.snooze_exit_section.heading"/>
+      <property id="module.driver.lpmv2.snooze_end_agt1_underflow" value="module.driver.lpmv2.snooze_end_agt1_underflow.disable"/>
+      <property id="module.driver.lpmv2.snooze_end_dtc_complete" value="module.driver.lpmv2.snooze_end_dtc_complete.disable"/>
+      <property id="module.driver.lpmv2.snooze_end_dtc_complete_negated" value="module.driver.lpmv2.snooze_end_dtc_complete_negated.disable"/>
+      <property id="module.driver.lpmv2.snooze_end_adc0_compare_match" value="module.driver.lpmv2.snooze_end_adc0_compare_match.disable"/>
+      <property id="module.driver.lpmv2.snooze_end_adc0_compare_mismatch" value="module.driver.lpmv2.snooze_end_adc0_compare_mismatch.disable"/>
+      <property id="module.driver.lpmv2.snooze_end_sci0_compare_mismatch" value="module.driver.lpmv2.snooze_end_sci0_compare_mismatch.disable"/>
+      <property id="module.driver.lpmv2.snooze_dtc" value="module.driver.lpmv2.snooze_dtc.LPMV2_SNOOZE_DTC_DISABLE"/>
+      <property id="module.driver.lpmv2.snooze_cancel" value="module.driver.lpmv2.snooze_cancel.NULL"/>
+    </module>
+    <module id="module.framework.sf_power_profiles_v2_run_on_sf_power_profiles_v2.236505881">
+      <property id="module.framework.sf_power_profiles_v2_run.name" value="g_sf_power_profiles_v2_run_0"/>
+      <property id="module.framework.sf_power_profiles_v2_run.run_pin_cfg_table" value="g_bsp_pin_cfg"/>
+    </module>
+    <module id="module.driver.cgc_cfg.1939809926">
+      <property id="module.driver.cgc_cfg.name" value="g_cgc_cfg0"/>
+      <property id="module.driver.cgc_cfg.system_clock" value="module.driver.cgc_cfg.system_clock.system_clock_pll"/>
+      <property id="module.driver.cgc_cfg.loco_state" value="module.driver.cgc_cfg.loco_state.loco_state_clock_change_none"/>
+      <property id="module.driver.cgc_cfg.moco_state" value="module.driver.cgc_cfg.moco_state.moco_state_clock_change_none"/>
+      <property id="module.driver.cgc_cfg.hoco_state" value="module.driver.cgc_cfg.hoco_state.hoco_state_clock_change_none"/>
+      <property id="module.driver.cgc_cfg.subosc_state" value="module.driver.cgc_cfg.subosc_state.subosc_state_clock_change_none"/>
+      <property id="module.driver.cgc_cfg.mainosc_state" value="module.driver.cgc_cfg.mainosc_state.mainosc_state_clock_change_none"/>
+      <property id="module.driver.cgc_cfg.pll_state" value="module.driver.cgc_cfg.subosc_state.pll_state_clock_change_none"/>
+      <property id="module.driver.cgc_cfg.source_clock" value="module.driver.cgc_cfg.source_clock.source_clock_main_osc"/>
+      <property id="module.driver.cgc_cfg.divider" value="module.driver.cgc_cfg.divider.divider_div_2"/>
+      <property id="module.driver.cgc_cfg.multiplier" value="module.driver.cgc_cfg.multiplier.multiplier_mul_8.0"/>
+      <property id="module.driver.cgc_cfg.pclka_div" value="module.driver.cgc_cfg.pclka_div.pclka_div_div_1"/>
+      <property id="module.driver.cgc_cfg.pclkb_div" value="module.driver.cgc_cfg.pclkb_div.pclkb_div_div_2"/>
+      <property id="module.driver.cgc_cfg.pclkc_div" value="module.driver.cgc_cfg.pclkc_div.pclkc_div_div_1"/>
+      <property id="module.driver.cgc_cfg.pclkd_div" value="module.driver.cgc_cfg.pclkd_div.pclkd_div_div_1"/>
+      <property id="module.driver.cgc_cfg.bclk_div" value="module.driver.cgc_cfg.bclk_div.bclk_div_div_2"/>
+      <property id="module.driver.cgc_cfg.fclk_div" value="module.driver.cgc_cfg.fclk_div.fclk_div_div_2"/>
+      <property id="module.driver.cgc_cfg.iclk_div" value="module.driver.cgc_cfg.iclk_div.iclk_div_div_1"/>
+    </module>
+    <module id="module.driver.external_irq_on_icu.1501513797">
+      <property id="module.driver.external_irq.name" value="g_external_irq9"/>
+      <property id="module.driver.external_irq.channel" value="9"/>
+      <property id="module.driver.external_irq.trigger" value="module.driver.external_irq.trigger.trig_rising"/>
+      <property id="module.driver.external_irq.filter_enable" value="module.driver.external_irq.filter_enable.false"/>
+      <property id="module.driver.external_irq.pclk_div" value="module.driver.external_irq.pclk_div.pclk_div_by_64"/>
+      <property id="module.driver.external_irq.interrupt_enable" value="module.driver.external_irq.interrupt_enable.true"/>
+      <property id="module.driver.external_irq.p_callback" value="accelerometer_callback"/>
+      <property id="module.driver.external_irq.irq_ipl" value="board.icu.common.irq.priority6"/>
+    </module>
+    <module id="module.driver.flash_on_flash_lp.1475560137">
+      <property id="module.driver.flash.name" value="flash_driver"/>
+      <property id="module.driver.flash.data_flash_bgo" value="module.driver.flash.data_flash_bgo.enabled"/>
+      <property id="module.driver.flash.p_callback" value="flash_CallBack"/>
+      <property id="module.driver.flash.irq_ipl" value="board.icu.common.irq.priority0"/>
+    </module>
+    <module id="module.driver.crc_on_crc.45959784">
+      <property id="module.driver.crc.name" value="g_crc"/>
+      <property id="module.driver.crc.crc_polynomial" value="module.driver.crc.crc_polynomial.gps_crc_32c"/>
+      <property id="module.driver.crc.crc_bit_order" value="module.driver.crc.crc_bit_order.lms_msb"/>
+      <property id="module.driver.crc.snoop_fifo_mode" value="module.driver.crc.snoop_fifo_mode.false"/>
+    </module>
+    <module id="module.framework.sf_i2c_on_sf_i2c_v2.1413731321">
+      <property id="module.framework.sf_i2c_v2.name" value="g_sf_i2c_bme280"/>
+      <property id="module.framework.sf_i2c_v2.slave" value="0x77"/>
+      <property id="module.framework.sf_i2c_v2.addr_mode" value="module.framework.sf_i2c_v2.addr_mode.addr_mode_7bit"/>
+    </module>
+    <module id="module.framework.sf_i2c_bus_on_sf_i2c_v2.1785859700">
+      <property id="module.framework.sf_i2c_bus_v2.name" value="g_sf_i2c_bus0"/>
+    </module>
+    <module id="module.driver.i2c_on_sci_i2c.295398344">
+      <property id="module.driver.i2c.name" value="g_i2c0"/>
+      <property id="module.driver.i2c.channel" value="2"/>
+      <property id="module.driver.i2c.rate" value="module.driver.i2c.rate.rate_standard"/>
+      <property id="module.driver.i2c.slave" value="0x00"/>
+      <property id="module.driver.i2c.addr_mode" value="module.driver.i2c.addr_mode.addr_mode_7bit"/>
+      <property id="module.driver.i2c.sda_delay" value="300"/>
+      <property id="module.driver.i2c.bitrate_modulation" value="module.driver.i2c.bitrate_modulation.true"/>
+      <property id="module.driver.i2c.p_callback" value="NULL"/>
+      <property id="module.driver.i2c.rxi_ipl" value="board.icu.common.irq.priority3"/>
+      <property id="module.driver.i2c.txi_ipl" value="board.icu.common.irq.priority3"/>
+      <property id="module.driver.i2c.tei_ipl" value="board.icu.common.irq.priority3"/>
+    </module>
+    <module id="module.driver.transfer_on_dtc.349686811">
+      <property id="module.driver.transfer.name" value="g_transfer1"/>
+      <property id="module.driver.transfer.mode" value="module.driver.transfer.mode.mode_normal"/>
+      <property id="module.driver.transfer.size" value="module.driver.transfer.size.size_2_byte"/>
+      <property id="module.driver.transfer.dest_addr_mode" value="module.driver.transfer.dest_addr_mode.addr_mode_fixed"/>
+      <property id="module.driver.transfer.src_addr_mode" value="module.driver.transfer.src_addr_mode.addr_mode_fixed"/>
+      <property id="module.driver.transfer.repeat_area" value="module.driver.transfer.repeat_area.repeat_area_source"/>
+      <property id="module.driver.transfer.interrupt" value="module.driver.transfer.interrupt.interrupt_end"/>
+      <property id="module.driver.transfer.p_dest" value="NULL"/>
+      <property id="module.driver.transfer.p_src" value="NULL"/>
+      <property id="module.driver.transfer.length" value="0"/>
+      <property id="module.driver.transfer.num_blocks" value="0"/>
+      <property id="module.driver.transfer.activation_source" value="module.driver.transfer.event.event_elc_software_event_0"/>
+      <property id="module.driver.transfer.auto_enable" value="module.driver.transfer.auto_enable.true"/>
+      <property id="module.driver.transfer.p_callback" value="NULL"/>
+      <property id="module.driver.transfer.irq_ipl" value="board.icu.common.irq.disabled"/>
+    </module>
+    <module id="module.driver.transfer_on_dtc.283087926">
+      <property id="module.driver.transfer.name" value="g_transfer2"/>
+      <property id="module.driver.transfer.mode" value="module.driver.transfer.mode.mode_normal"/>
+      <property id="module.driver.transfer.size" value="module.driver.transfer.size.size_2_byte"/>
+      <property id="module.driver.transfer.dest_addr_mode" value="module.driver.transfer.dest_addr_mode.addr_mode_fixed"/>
+      <property id="module.driver.transfer.src_addr_mode" value="module.driver.transfer.src_addr_mode.addr_mode_fixed"/>
+      <property id="module.driver.transfer.repeat_area" value="module.driver.transfer.repeat_area.repeat_area_source"/>
+      <property id="module.driver.transfer.interrupt" value="module.driver.transfer.interrupt.interrupt_end"/>
+      <property id="module.driver.transfer.p_dest" value="NULL"/>
+      <property id="module.driver.transfer.p_src" value="NULL"/>
+      <property id="module.driver.transfer.length" value="0"/>
+      <property id="module.driver.transfer.num_blocks" value="0"/>
+      <property id="module.driver.transfer.activation_source" value="module.driver.transfer.event.event_elc_software_event_0"/>
+      <property id="module.driver.transfer.auto_enable" value="module.driver.transfer.auto_enable.true"/>
+      <property id="module.driver.transfer.p_callback" value="NULL"/>
+      <property id="module.driver.transfer.irq_ipl" value="board.icu.common.irq.disabled"/>
+    </module>
+    <module id="module.framework.sf_i2c_on_sf_i2c_v2.1640132471">
+      <property id="module.framework.sf_i2c_v2.name" value="g_sf_i2c_bmx055_acc"/>
+      <property id="module.framework.sf_i2c_v2.slave" value="0x19"/>
+      <property id="module.framework.sf_i2c_v2.addr_mode" value="module.framework.sf_i2c_v2.addr_mode.addr_mode_7bit"/>
+    </module>
+    <module id="module.framework.sf_i2c_on_sf_i2c_v2.1054056265">
+      <property id="module.framework.sf_i2c_v2.name" value="g_sf_i2c_bmx055_gyr"/>
+      <property id="module.framework.sf_i2c_v2.slave" value="0x69"/>
+      <property id="module.framework.sf_i2c_v2.addr_mode" value="module.framework.sf_i2c_v2.addr_mode.addr_mode_7bit"/>
+    </module>
+    <module id="module.framework.sf_i2c_on_sf_i2c_v2.1299169010">
+      <property id="module.framework.sf_i2c_v2.name" value="g_sf_i2c_bmx055_mag"/>
+      <property id="module.framework.sf_i2c_v2.slave" value="0x13"/>
+      <property id="module.framework.sf_i2c_v2.addr_mode" value="module.framework.sf_i2c_v2.addr_mode.addr_mode_7bit"/>
+    </module>
+    <module id="module.framework.sf_comms_on_sf_uart_comms.473128970">
+      <property id="module.framework.sf_comms.name" value="g_sf_modem_uart0"/>
+      <property id="module.framework.sf_comms.init_function" value="g_sf_modem_uart0_init"/>
+      <property id="module.framework.sf_comms.init" value="module.framework.sf_comms.init.enable"/>
+    </module>
+    <module id="module.driver.uart_on_sci_uart.629024527">
+      <property id="module.driver.uart.name" value="g_uart0"/>
+      <property id="module.driver.uart.channel" value="0"/>
+      <property id="module.driver.uart.baud_rate" value="115200"/>
+      <property id="module.driver.uart.data_bits" value="module.driver.uart.data_bits.data_bits_8"/>
+      <property id="module.driver.uart.parity" value="module.driver.uart.parity.parity_off"/>
+      <property id="module.driver.uart.stop_bits" value="module.driver.uart.stop_bits.stop_bits_1"/>
+      <property id="module.driver.uart.ctsrts_en" value="module.driver.uart.ctsrts_en.false"/>
+      <property id="module.driver.uart.callback" value="user_uart_callback"/>
+      <property id="module.driver.uart.callback.rts_pin_ctrl" value="NULL"/>
+      <property id="module.driver.uart.clk_src" value="module.driver.uart.clk_src.int_clk"/>
+      <property id="module.driver.uart.baudclk_out" value="module.driver.uart.baudclk_out.false"/>
+      <property id="module.driver.uart.rx_edge_start" value="module.driver.uart.rx_edge_start.true"/>
+      <property id="module.driver.uart.noisecancel_en" value="module.driver.uart.noisecancel_en.false"/>
+      <property id="module.driver.uart.bitrate_modulation" value="module.driver.uart.bitrate_modulation.true"/>
+      <property id="module.driver.uart.rx_fifo_trigger" value="module.driver.uart.rx_fifo_trigger.max"/>
+      <property id="module.driver.uart.rxi_ipl" value="board.icu.common.irq.priority1"/>
+      <property id="module.driver.uart.txi_ipl" value="board.icu.common.irq.priority2"/>
+      <property id="module.driver.uart.tei_ipl" value="board.icu.common.irq.priority2"/>
+      <property id="module.driver.uart.eri_ipl" value="board.icu.common.irq.priority2"/>
+      <property id="module.driver.uart.baud_rate_error" value="2.0"/>
+      <property id="module.driver.uart.uart_comm_mode" value="module.driver.uart.uart_comm_mode.uart_rs232_mode"/>
+      <property id="module.driver.uart.uart_rs485_mode" value="module.driver.uart.uart_rs485_mode.uart_hd_mode"/>
+      <property id="module.driver.uart.rs485_de_port" value="module.driver.uart.rs485_de_port.PORT_09"/>
+      <property id="module.driver.uart.rs485_de_pin" value="module.driver.uart.rs485_de_pin.PIN_14"/>
+    </module>
+    <module id="module.driver.transfer_on_dtc.1863934703">
+      <property id="module.driver.transfer.name" value="g_transfer0"/>
+      <property id="module.driver.transfer.mode" value="module.driver.transfer.mode.mode_normal"/>
+      <property id="module.driver.transfer.size" value="module.driver.transfer.size.size_2_byte"/>
+      <property id="module.driver.transfer.dest_addr_mode" value="module.driver.transfer.dest_addr_mode.addr_mode_fixed"/>
+      <property id="module.driver.transfer.src_addr_mode" value="module.driver.transfer.src_addr_mode.addr_mode_fixed"/>
+      <property id="module.driver.transfer.repeat_area" value="module.driver.transfer.repeat_area.repeat_area_source"/>
+      <property id="module.driver.transfer.interrupt" value="module.driver.transfer.interrupt.interrupt_end"/>
+      <property id="module.driver.transfer.p_dest" value="NULL"/>
+      <property id="module.driver.transfer.p_src" value="NULL"/>
+      <property id="module.driver.transfer.length" value="0"/>
+      <property id="module.driver.transfer.num_blocks" value="0"/>
+      <property id="module.driver.transfer.activation_source" value="module.driver.transfer.event.event_elc_software_event_0"/>
+      <property id="module.driver.transfer.auto_enable" value="module.driver.transfer.auto_enable.true"/>
+      <property id="module.driver.transfer.p_callback" value="NULL"/>
+      <property id="module.driver.transfer.irq_ipl" value="board.icu.common.irq.disabled"/>
+    </module>
+    <module id="module.driver.external_irq_on_icu.922836582">
+      <property id="module.driver.external_irq.name" value="g_external_irq13"/>
+      <property id="module.driver.external_irq.channel" value="13"/>
+      <property id="module.driver.external_irq.trigger" value="module.driver.external_irq.trigger.trig_rising"/>
+      <property id="module.driver.external_irq.filter_enable" value="module.driver.external_irq.filter_enable.true"/>
+      <property id="module.driver.external_irq.pclk_div" value="module.driver.external_irq.pclk_div.pclk_div_by_64"/>
+      <property id="module.driver.external_irq.interrupt_enable" value="module.driver.external_irq.interrupt_enable.true"/>
+      <property id="module.driver.external_irq.p_callback" value="detect_charger_callback"/>
+      <property id="module.driver.external_irq.irq_ipl" value="board.icu.common.irq.priority6"/>
+    </module>
+    <module id="module.driver.transfer_on_dtc.870922632">
+      <property id="module.driver.transfer.name" value="g_transfer3"/>
+      <property id="module.driver.transfer.mode" value="module.driver.transfer.mode.mode_normal"/>
+      <property id="module.driver.transfer.size" value="module.driver.transfer.size.size_2_byte"/>
+      <property id="module.driver.transfer.dest_addr_mode" value="module.driver.transfer.dest_addr_mode.addr_mode_fixed"/>
+      <property id="module.driver.transfer.src_addr_mode" value="module.driver.transfer.src_addr_mode.addr_mode_fixed"/>
+      <property id="module.driver.transfer.repeat_area" value="module.driver.transfer.repeat_area.repeat_area_source"/>
+      <property id="module.driver.transfer.interrupt" value="module.driver.transfer.interrupt.interrupt_end"/>
+      <property id="module.driver.transfer.p_dest" value="NULL"/>
+      <property id="module.driver.transfer.p_src" value="NULL"/>
+      <property id="module.driver.transfer.length" value="0"/>
+      <property id="module.driver.transfer.num_blocks" value="0"/>
+      <property id="module.driver.transfer.activation_source" value="module.driver.transfer.event.event_elc_software_event_0"/>
+      <property id="module.driver.transfer.auto_enable" value="module.driver.transfer.auto_enable.true"/>
+      <property id="module.driver.transfer.p_callback" value="NULL"/>
+      <property id="module.driver.transfer.irq_ipl" value="board.icu.common.irq.disabled"/>
+    </module>
+    <context id="_hal.0">
+      <stack module="module.driver.cgc_on_cgc.0"/>
+      <stack module="module.driver.ioport_on_ioport.0"/>
+      <stack module="module.driver.fmi_on_fmi.0"/>
+      <stack module="module.driver.elc_on_elc.0"/>
+      <stack module="module.driver.rtc_on_rtc.2069130906"/>
+      <stack module="module.driver.timer_on_agt.1152927623"/>
+      <stack module="module.driver.external_irq_on_icu.444035099"/>
+      <stack module="module.framework.sf_power_profiles_v2_low_power_on_sf_power_profiles_v2.1812410776">
+        <stack module="module.driver.lpmv2_s3a7_standby.663673926" requires="module.framework.sf_power_profiles_v2_low_power.requires.lpmv2"/>
+        <stack module="module.framework.sf_power_profiles_v2_common_on_sf_power_profiles_v2.1649434992" requires="module.framework.sf_power_profiles_v2_low_power.requires.sf_power_profiles_v2_common">
+          <stack module="module.driver.lpmv2_common_on_lpmv2_s3a7.437359715" requires="module.framework.sf_power_profiles_v2_common.requires.lpmv2_common"/>
+        </stack>
+      </stack>
+      <stack module="module.framework.sf_power_profiles_v2_run_on_sf_power_profiles_v2.236505881">
+        <stack module="module.framework.sf_power_profiles_v2_common_on_sf_power_profiles_v2.1649434992" requires="module.framework.sf_power_profiles_v2_run.requires.sf_power_profiles_v2_common">
+          <stack module="module.driver.lpmv2_common_on_lpmv2_s3a7.437359715" requires="module.framework.sf_power_profiles_v2_common.requires.lpmv2_common"/>
+        </stack>
+        <stack module="module.driver.cgc_cfg.1939809926" requires="module.framework.sf_power_profiles_v2_run.requires.cgc_cfg"/>
+      </stack>
+      <stack module="module.driver.external_irq_on_icu.1501513797"/>
+      <stack module="module.driver.flash_on_flash_lp.1475560137"/>
+      <stack module="module.driver.crc_on_crc.45959784"/>
+      <stack module="module.driver.external_irq_on_icu.922836582"/>
+    </context>
+    <context id="rtos.threadx.thread.1068318822">
+      <property id="_symbol" value="uart0_receive_thread"/>
+      <property id="rtos.threadx.thread.name" value="Modem Receiver"/>
+      <property id="rtos.threadx.thread.stack" value="1024"/>
+      <property id="rtos.threadx.thread.priority" value="2"/>
+      <property id="rtos.threadx.thread.autostart" value="rtos.threadx.thread.autostart.enabled"/>
+      <property id="rtos.threadx.thread.timeslice" value="10"/>
+      <stack module="module.framework.sf_comms_on_sf_uart_comms.473128970">
+        <stack module="module.driver.uart_on_sci_uart.629024527" requires="module.framework.sf_comms_on_sf_uart_comms.requires.uart">
+          <stack module="module.driver.transfer_on_dtc.1863934703" requires="module.driver.uart_on_sci_uart.requires.transfer_tx"/>
+          <stack module="module.driver.transfer_on_dtc.870922632" requires="module.driver.uart_on_sci_uart.requires.transfer_rx"/>
+        </stack>
+      </stack>
+    </context>
+    <context id="rtos.threadx.thread.951441060">
+      <property id="_symbol" value="tracker_task"/>
+      <property id="rtos.threadx.thread.name" value="Tracker Task"/>
+      <property id="rtos.threadx.thread.stack" value="4096"/>
+      <property id="rtos.threadx.thread.priority" value="10"/>
+      <property id="rtos.threadx.thread.autostart" value="rtos.threadx.thread.autostart.enabled"/>
+      <property id="rtos.threadx.thread.timeslice" value="100"/>
+      <stack module="module.framework.sf_i2c_on_sf_i2c_v2.1413731321">
+        <stack module="module.framework.sf_i2c_bus_on_sf_i2c_v2.1785859700" requires="module.framework.sf_i2c_on_sf_i2c.requires.sf_i2c_bus_v2">
+          <stack module="module.driver.i2c_on_sci_i2c.295398344" requires="module.framework.sf_i2c_on_sf_i2c.requires.i2c">
+            <stack module="module.driver.transfer_on_dtc.349686811" requires="module.driver.i2c_on_sci_i2c.requires.transfer_tx"/>
+            <stack module="module.driver.transfer_on_dtc.283087926" requires="module.driver.i2c_on_sci_i2c.requires.transfer_rx"/>
+          </stack>
+        </stack>
+      </stack>
+      <stack module="module.framework.sf_i2c_on_sf_i2c_v2.1640132471">
+        <stack module="module.framework.sf_i2c_bus_on_sf_i2c_v2.1785859700" requires="module.framework.sf_i2c_on_sf_i2c.requires.sf_i2c_bus_v2">
+          <stack module="module.driver.i2c_on_sci_i2c.295398344" requires="module.framework.sf_i2c_on_sf_i2c.requires.i2c">
+            <stack module="module.driver.transfer_on_dtc.349686811" requires="module.driver.i2c_on_sci_i2c.requires.transfer_tx"/>
+            <stack module="module.driver.transfer_on_dtc.283087926" requires="module.driver.i2c_on_sci_i2c.requires.transfer_rx"/>
+          </stack>
+        </stack>
+      </stack>
+      <stack module="module.framework.sf_i2c_on_sf_i2c_v2.1054056265">
+        <stack module="module.framework.sf_i2c_bus_on_sf_i2c_v2.1785859700" requires="module.framework.sf_i2c_on_sf_i2c.requires.sf_i2c_bus_v2">
+          <stack module="module.driver.i2c_on_sci_i2c.295398344" requires="module.framework.sf_i2c_on_sf_i2c.requires.i2c">
+            <stack module="module.driver.transfer_on_dtc.349686811" requires="module.driver.i2c_on_sci_i2c.requires.transfer_tx"/>
+            <stack module="module.driver.transfer_on_dtc.283087926" requires="module.driver.i2c_on_sci_i2c.requires.transfer_rx"/>
+          </stack>
+        </stack>
+      </stack>
+      <stack module="module.framework.sf_i2c_on_sf_i2c_v2.1299169010">
+        <stack module="module.framework.sf_i2c_bus_on_sf_i2c_v2.1785859700" requires="module.framework.sf_i2c_on_sf_i2c.requires.sf_i2c_bus_v2">
+          <stack module="module.driver.i2c_on_sci_i2c.295398344" requires="module.framework.sf_i2c_on_sf_i2c.requires.i2c">
+            <stack module="module.driver.transfer_on_dtc.349686811" requires="module.driver.i2c_on_sci_i2c.requires.transfer_tx"/>
+            <stack module="module.driver.transfer_on_dtc.283087926" requires="module.driver.i2c_on_sci_i2c.requires.transfer_rx"/>
+          </stack>
+        </stack>
+      </stack>
+    </context>
+    <context id="rtos.threadx.thread.431096894">
+      <property id="_symbol" value="led_thread"/>
+      <property id="rtos.threadx.thread.name" value="LED Thread"/>
+      <property id="rtos.threadx.thread.stack" value="1024"/>
+      <property id="rtos.threadx.thread.priority" value="1"/>
+      <property id="rtos.threadx.thread.autostart" value="rtos.threadx.thread.autostart.enabled"/>
+      <property id="rtos.threadx.thread.timeslice" value="10"/>
+    </context>
+    <config id="config.framework.sf_power_profiles_v2">
+      <property id="config.framework.sf_power_profiles_v2.param_checking_enable" value="config.framework.sf_power_profiles_v2.param_checking_enable.bsp"/>
+    </config>
+    <config id="config.driver.cgc">
+      <property id="config.driver.cgc.param_checking_enable" value="config.driver.cgc.param_checking_enable.bsp"/>
+      <property id="config.driver.cgc.main_osc_wait" value="config.driver.cgc.main_osc_wait.wait_547"/>
+      <property id="config.driver.cgc.main_osc_clock_source" value="config.driver.cgc.main_osc_clock_source.crystal"/>
+      <property id="config.driver.cgc.subclock_drive" value="config.driver.cgc.subclock_drive.normal"/>
+      <property id="config.driver.cgc.subclock_at_reset_enable" value="config.driver.cgc.subclock_at_reset_enable.enabled"/>
+      <property id="config.driver.cgc.low_voltage_mode" value="config.driver.cgc.low_voltage_mode.disabled"/>
+    </config>
+    <config id="config.driver.ioport">
+      <property id="config.driver.ioport.checking" value="config.driver.ioport.checking.system"/>
+    </config>
+    <config id="config.threadx.thread"/>
+    <config id="config.driver.flash_lp">
+      <property id="config.driver.flash_lp.param_checking_enable" value="config.driver.flash_lp.param_checking_enable.bsp"/>
+      <property id="config.driver.flash_lp.param_code_flash_programming_enable" value="config.driver.flash_lp.param_code_flash_programming_enable.disabled"/>
+    </config>
+    <config id="config.driver.sci_uart">
+      <property id="config.driver.sci_uart.external_rts_operation" value="config.driver.sci_uart.external_rts_operation.disabled"/>
+      <property id="config.driver.sci_uart.uart_rx_enable" value="config.driver.sci_uart.uart_rx_enable.enabled"/>
+      <property id="config.driver.sci_uart.uart_tx_enable" value="config.driver.sci_uart.uart_tx_enable.enabled"/>
+      <property id="config.driver.sci_uart.param_checking_enable" value="config.driver.sci_uart.param_checking_enable.bsp"/>
+    </config>
+    <config id="config.driver.sci_i2c">
+      <property id="config.driver.sci_i2c.param_checking_enable" value="config.driver.sci_i2c.param_checking_enable.bsp"/>
+    </config>
+    <config id="config.framework.sf_i2c">
+      <property id="config.framework.sf_i2c.param_checking_enable" value="config.framework.sf_i2c.param_checking_enable.enabled"/>
+    </config>
+    <config id="config.framework.sf_i2c_v2">
+      <property id="config.framework.sf_i2c_v2.param_checking_enable" value="config.framework.sf_i2c_v2.param_checking_enable.enabled"/>
+    </config>
+    <config id="config.driver.icu">
+      <property id="config.driver.icu.param_checking_enable" value="config.driver.icu.param_checking_enable.bsp"/>
+    </config>
+    <config id="config.driver.fmi">
+      <property id="config.driver.fmi.param_checking_enable" value="config.driver.fmi.param_checking_enable.bsp"/>
+      <property id="config.driver.fmi.custom_base_address_symbol" value="g_fmi_data"/>
+      <property id="config.driver.fmi.part_number_mask" value="0xFE00"/>
+    </config>
+    <config id="config.driver.rtc">
+      <property id="config.driver.rtc.param_checking_enable" value="config.driver.rtc.param_checking_enable.bsp"/>
+    </config>
+    <config id="config.driver.elc">
+      <property id="config.driver.elc.checking" value="config.driver.elc.checking.system"/>
+    </config>
+    <config id="config.driver.lpmv2_s3a7">
+      <property id="config.driver.lpmv2_s3a7.param_checking_enable" value="config.driver.lpmv2_s3a7.param_checking_enable.bsp"/>
+    </config>
+    <config id="config.framework.sf_uart_comms">
+      <property id="config.framework.sf_comms.param_checking_enable" value="config.framework.sf_comms.param_checking_enable.bsp"/>
+      <property id="config.framework.sf_comms.read_size" value="256"/>
+    </config>
+    <config id="config.driver.crc">
+      <property id="config.driver.crc.checking" value="config.driver.crc.checking.system"/>
+    </config>
+    <config id="config.driver.agt">
+      <property id="config.driver.agt.param_checking_enable" value="config.driver.agt.param_checking_enable.bsp"/>
+    </config>
+    <config id="config.driver.dtc">
+      <property id="config.driver.dtc.param_checking_enable" value="config.driver.dtc.param_checking_enable.bsp"/>
+      <property id="config.driver.dtc.software_start" value="config.driver.dtc.software_start.disabled"/>
+      <property id="config.driver.dtc.vector_table" value=".ssp_dtc_vector_table"/>
+    </config>
+  </synergyModuleConfiguration>
+  <synergyPinConfiguration>
+    <pincfg active="true" name="R7FS3A77C3A01CNB.pincfg" symbol="g_bsp_pin_cfg"/>
+    <pincfg active="true" name="low_power_pin_config.pincfg" symbol="low_pwr_config"/>
+  </synergyPinConfiguration>
+</synergyConfiguration>

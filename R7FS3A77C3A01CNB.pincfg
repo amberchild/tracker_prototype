@@ -1,0 +1,174 @@
+<v1:pinSettings xmlns:v1="http://www.tasking.com/schema/pinsettings/v1.1">
+  <v1:pinMappingsRef version="2.03" file="pinmapping:/internal/projectgen/arm/1.7/pinmapping/PinCfgR7FS3A77xxxxxxNB.xml"/>
+  <v1:deviceSetting id="renesas.s3a7_nb" pattern="R7FS3A77******NB">
+    <v1:packageSetting id="renesas.64qfn"/>
+  </v1:deviceSetting>
+  <v1:configSetting configurationId="debug0.mode" altId="debug0.mode.jtag"/>
+  <v1:configSetting configurationId="p300.gpio_mode" altId="p300.gpio_mode.gpio_mode_peripheral"/>
+  <v1:configSetting configurationId="p300" altId="p300.debug0.tck">
+    <v1:connectionSetting altId="debug0.tck.p300"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="debug0.tck" altId="debug0.tck.p300">
+    <v1:connectionSetting altId="p300.debug0.tck"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="p108.gpio_mode" altId="p108.gpio_mode.gpio_mode_peripheral"/>
+  <v1:configSetting configurationId="p108" altId="p108.debug0.tms">
+    <v1:connectionSetting altId="debug0.tms.p108"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="debug0.tms" altId="debug0.tms.p108">
+    <v1:connectionSetting altId="p108.debug0.tms"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="p109.gpio_mode" altId="p109.gpio_mode.gpio_mode_peripheral"/>
+  <v1:configSetting configurationId="p109" altId="p109.debug0.tdo">
+    <v1:connectionSetting altId="debug0.tdo.p109"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="debug0.tdo" altId="debug0.tdo.p109">
+    <v1:connectionSetting altId="p109.debug0.tdo"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="p110.gpio_mode" altId="p110.gpio_mode.gpio_mode_peripheral"/>
+  <v1:configSetting configurationId="p110" altId="p110.debug0.tdi">
+    <v1:connectionSetting altId="debug0.tdi.p110"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="debug0.tdi" altId="debug0.tdi.p110">
+    <v1:connectionSetting altId="p110.debug0.tdi"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="usbfs0.vssusb" altId="usbfs0.vssusb.vssusb">
+    <v1:connectionSetting altId="vssusb.usbfs0.vssusb"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="vssusb" altId="vssusb.usbfs0.vssusb">
+    <v1:connectionSetting altId="usbfs0.vssusb.vssusb"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="usbfs0.vccusbldo" altId="usbfs0.vccusbldo.vccusbldo">
+    <v1:connectionSetting altId="vccusbldo.usbfs0.vccusbldo"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="vccusb" altId="vccusb.usbfs0.vccusb">
+    <v1:connectionSetting altId="usbfs0.vccusb.vccusb"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="adc.avcc0" altId="adc.avcc0.avcc0">
+    <v1:connectionSetting altId="avcc0.adc.avcc0"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="adc.avss0" altId="adc.avss0.avss0">
+    <v1:connectionSetting altId="avss0.adc.avss0"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="usbfs0.usbdm" altId="usbfs0.usbdm.usbdm">
+    <v1:connectionSetting altId="usbdm.usbfs0.usbdm"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="vccusbldo" altId="vccusbldo.usbfs0.vccusbldo">
+    <v1:connectionSetting altId="usbfs0.vccusbldo.vccusbldo"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="usbfs0.usbdp" altId="usbfs0.usbdp.usbdp">
+    <v1:connectionSetting altId="usbdp.usbfs0.usbdp"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="usbdm" altId="usbdm.usbfs0.usbdm">
+    <v1:connectionSetting altId="usbfs0.usbdm.usbdm"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="usbfs0.vccusb" altId="usbfs0.vccusb.vccusb">
+    <v1:connectionSetting altId="vccusb.usbfs0.vccusb"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="avcc0" altId="avcc0.adc.avcc0">
+    <v1:connectionSetting altId="adc.avcc0.avcc0"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="avss0" altId="avss0.adc.avss0">
+    <v1:connectionSetting altId="adc.avss0.avss0"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="usbdp" altId="usbdp.usbfs0.usbdp">
+    <v1:connectionSetting altId="usbfs0.usbdp.usbdp"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="p101.gpio_mode" altId="p101.gpio_mode.gpio_mode_peripheral"/>
+  <v1:configSetting configurationId="p301.gpio_otype" altId="p301.gpio_otype.gpio_otype_n_ch_od"/>
+  <v1:configSetting configurationId="irq0.mode" altId="irq0.mode.enabled"/>
+  <v1:configSetting configurationId="p301.gpio_mode" altId="p301.gpio_mode.gpio_mode_peripheral"/>
+  <v1:configSetting configurationId="dac0.mode" altId="dac0.mode.disabled"/>
+  <v1:configSetting configurationId="sci0.mode" altId="sci0.mode.asynchronous.free"/>
+  <v1:configSetting configurationId="p206.gpio_irq" altId="p206.gpio_irq.gpio_irq_enabled"/>
+  <v1:configSetting configurationId="dac1.mode" altId="dac1.mode.disabled"/>
+  <v1:configSetting configurationId="p000.gpio_mode" altId="p000.gpio_mode.disabled"/>
+  <v1:configSetting configurationId="p407.gpio_mode" altId="p407.gpio_mode.gpio_mode_peripheral"/>
+  <v1:configSetting configurationId="sci0.rxd" altId="sci0.rxd.p100">
+    <v1:connectionSetting altId="p100.sci0.rxd"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="p101" altId="p101.sci0.txd">
+    <v1:connectionSetting altId="sci0.txd.p101"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="p100" altId="p100.sci0.rxd">
+    <v1:connectionSetting altId="sci0.rxd.p100"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="p302" altId="p302.sci2.sda">
+    <v1:connectionSetting altId="sci2.sda.p302"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="p100.gpio_mode" altId="p100.gpio_mode.gpio_mode_peripheral"/>
+  <v1:configSetting configurationId="p301" altId="p301.sci2.scl">
+    <v1:connectionSetting altId="sci2.scl.p301"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="sci0.txd" altId="sci0.txd.p101">
+    <v1:connectionSetting altId="p101.sci0.txd"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="p302.gpio_mode" altId="p302.gpio_mode.gpio_mode_peripheral"/>
+  <v1:configSetting configurationId="usbfs0.mode" altId="usbfs0.mode.device"/>
+  <v1:configSetting configurationId="sci2.sda" altId="sci2.sda.p302">
+    <v1:connectionSetting altId="p302.sci2.sda"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="adc0.mode" altId="adc0.mode.disabled"/>
+  <v1:configSetting configurationId="sci2.scl" altId="sci2.scl.p301">
+    <v1:connectionSetting altId="p301.sci2.scl"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="sci3.mode" altId="sci3.mode.disabled"/>
+  <v1:configSetting configurationId="p015" altId="p015.input"></v1:configSetting>
+  <v1:configSetting configurationId="usbfs0.vbus" altId="usbfs0.vbus.p407">
+    <v1:connectionSetting altId="p407.usbfs0.vbus"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="p206.gpio_mode" altId="p206.gpio_mode.gpio_mode_in"/>
+  <v1:configSetting configurationId="p302.gpio_otype" altId="p302.gpio_otype.gpio_otype_n_ch_od"/>
+  <v1:configSetting configurationId="irq0.irq00" altId="irq0.irq00.none"></v1:configSetting>
+  <v1:configSetting configurationId="rtc0.rtcout" altId="rtc0.rtcout.none"/>
+  <v1:configSetting configurationId="rtc0.mode" altId="rtc0.mode.enabled"/>
+  <v1:configSetting configurationId="sci2.mode" altId="sci2.mode.iic.free"/>
+  <v1:configSetting configurationId="p407" altId="p407.usbfs0.vbus">
+    <v1:connectionSetting altId="usbfs0.vbus.p407"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="p206" altId="p206.input"></v1:configSetting>
+  <v1:configSetting configurationId="p015.gpio_mode" altId="p015.gpio_mode.gpio_mode_in"/>
+  <v1:configSetting configurationId="dac0.da" altId="dac0.da.none"/>
+  <v1:configSetting configurationId="p201.gpio_mode" altId="p201.gpio_mode.gpio_mode_in"/>
+  <v1:configSetting configurationId="p401.gpio_mode" altId="p401.gpio_mode.gpio_mode_out.low"/>
+  <v1:configSetting configurationId="p400.gpio_mode" altId="p400.gpio_mode.gpio_mode_out.high"/>
+  <v1:configSetting configurationId="p200.gpio_mode" altId="p200.gpio_mode.gpio_mode_in"/>
+  <v1:configSetting configurationId="p304" altId="p304.input"></v1:configSetting>
+  <v1:configSetting configurationId="p303" altId="p303.input"/>
+  <v1:configSetting configurationId="p500.gpio_mode" altId="p500.gpio_mode.gpio_mode_in"/>
+  <v1:configSetting configurationId="p501.gpio_mode" altId="p501.gpio_mode.gpio_mode_in"/>
+  <v1:configSetting configurationId="p201" altId="p201.input"/>
+  <v1:configSetting configurationId="p200" altId="p200.input"/>
+  <v1:configSetting configurationId="p205" altId="p205.output.low"/>
+  <v1:configSetting configurationId="p204" altId="p204.output.low"/>
+  <v1:configSetting configurationId="p304.gpio_mode" altId="p304.gpio_mode.gpio_mode_in"/>
+  <v1:configSetting configurationId="p204.gpio_mode" altId="p204.gpio_mode.gpio_mode_out.low"/>
+  <v1:configSetting configurationId="p303.gpio_mode" altId="p303.gpio_mode.gpio_mode_in"/>
+  <v1:configSetting configurationId="p502" altId="p502.input"/>
+  <v1:configSetting configurationId="p501" altId="p501.input"/>
+  <v1:configSetting configurationId="p500" altId="p500.input"/>
+  <v1:configSetting configurationId="p410.gpio_mode" altId="p410.gpio_mode.disabled"/>
+  <v1:configSetting configurationId="p502.gpio_mode" altId="p502.gpio_mode.gpio_mode_in"/>
+  <v1:configSetting configurationId="p402.gpio_mode" altId="p402.gpio_mode.gpio_mode_in"/>
+  <v1:configSetting configurationId="p205.gpio_mode" altId="p205.gpio_mode.gpio_mode_out.low"/>
+  <v1:configSetting configurationId="p102.gpio_mode" altId="p102.gpio_mode.disabled"/>
+  <v1:configSetting configurationId="p402" altId="p402.input"/>
+  <v1:configSetting configurationId="p401" altId="p401.output.low"/>
+  <v1:configSetting configurationId="p400" altId="p400.output.high"/>
+  <v1:configSetting configurationId="p205.gpio_drivecapacity" altId="p205.gpio_speed.gpio_speed_medium"/>
+  <v1:configSetting configurationId="p111.gpio_drivecapacity" altId="p111.gpio_speed.gpio_speed_medium"/>
+  <v1:configSetting configurationId="p204.gpio_drivecapacity" altId="p204.gpio_speed.gpio_speed_medium"/>
+  <v1:configSetting configurationId="p112.gpio_drivecapacity" altId="p112.gpio_speed.gpio_speed_medium"/>
+  <v1:configSetting configurationId="p113.gpio_drivecapacity" altId="p113.gpio_speed.gpio_speed_medium"/>
+  <v1:configSetting configurationId="p111.gpio_mode" altId="p111.gpio_mode.gpio_mode_out.low"/>
+  <v1:configSetting configurationId="p112.gpio_mode" altId="p112.gpio_mode.gpio_mode_out.low"/>
+  <v1:configSetting configurationId="p113" altId="p113.output.low"/>
+  <v1:configSetting configurationId="p112" altId="p112.output.low"/>
+  <v1:configSetting configurationId="p111" altId="p111.output.low"/>
+  <v1:configSetting configurationId="p113.gpio_mode" altId="p113.gpio_mode.gpio_mode_out.low"/>
+  <v1:configSetting configurationId="irq0.irq13" altId="irq0.irq13.none"></v1:configSetting>
+  <v1:configSetting configurationId="p015.gpio_irq" altId="p015.gpio_irq.gpio_irq_enabled"/>
+  <v1:configSetting configurationId="p304.gpio_irq" altId="p304.gpio_irq.gpio_irq_enabled"/>
+  <v1:configSetting configurationId="irq0.irq09" altId="irq0.irq09.none"></v1:configSetting>
+  <v1:configSetting configurationId="p206.gpio_pupd" altId="p206.gpio_pupd.gpio_pupd_ip_up"/>
+</v1:pinSettings>
