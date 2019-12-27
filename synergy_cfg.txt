@@ -149,8 +149,8 @@ Synergy Configuration
       P013 54 - - - Disabled - - "ADC: VREFL; ADC0: AN13; OPAMP1: AMP+" 
       P014 53 - - - Disabled - - "ADC0: AN14; CMP0: IVREF5; DAC120: DA" 
       P015 52 GPIO - IRQ13 "Input mode" - None "ADC0: AN15; CMP0: IVCMP5; DAC121: DA; IRQ0: IRQ13" 
-      P100 48 - - - Disabled - - "ADC0: AN27; AGT0: AGTIO; CMP0: CMPIN0; IIC1: SCL; IRQ0: IRQ02; KINT0: KRM0; POEG0: GTETRG; SCI0: RXD_MISO; SCI0: SCL; SCI1: SCK; SLCDC0: VL1; SPI0: MISO" 
-      P101 47 - - - Disabled - - "ADC0: AN26; AGT0: AGTEE; CMP0: CMPREF0; IIC1: SDA; IRQ0: IRQ01; KINT0: KRM1; POEG1: GTETRG; SCI0: SDA; SCI0: TXD_MOSI; SCI1: CTS_RTS_SS; SLCDC0: VL2; SPI0: MOSI" 
+      P100 48 SCI0_RXD_MISO Low None "Peripheral mode" CMOS None "ADC0: AN27; AGT0: AGTIO; CMP0: CMPIN0; IIC1: SCL; IRQ0: IRQ02; KINT0: KRM0; POEG0: GTETRG; SCI0: RXD_MISO; SCI0: SCL; SCI1: SCK; SLCDC0: VL1; SPI0: MISO" 
+      P101 47 SCI0_TXD_MOSI Low None "Peripheral mode" CMOS None "ADC0: AN26; AGT0: AGTEE; CMP0: CMPREF0; IIC1: SDA; IRQ0: IRQ01; KINT0: KRM1; POEG1: GTETRG; SCI0: SDA; SCI0: TXD_MOSI; SCI1: CTS_RTS_SS; SLCDC0: VL2; SPI0: MOSI" 
       P102 46 - - - Disabled - - "ADC0: ADTRG; ADC0: AN25; AGT0: AGTO; CMP0: CMPIN1; GPT2: GTIOCB; KINT0: KRM2; OPS0: GTOWLO; SCI0: SCK; SLCDC0: VL3; SPI0: RSPCK" 
       P103 45 - - - Disabled - - "ADC0: AN24; CMP0: CMPREF1; GPT2: GTIOCA; KINT0: KRM3; OPS0: GTOWUP; SCI0: CTS_RTS_SS; SLCDC0: VL4; SPI0: SSL0" 
       P104 44 - - - Disabled - - "IRQ0: IRQ01; KINT0: KRM4; POEG1: GTETRG; SLCDC0: COM0; SPI0: SSL1" 
@@ -173,8 +173,8 @@ Synergy Configuration
       P214 7 - - - Disabled - - "CGC0: XCOUT" 
       P215 6 - - - Disabled - - "CGC0: XCIN" 
       P300 32 DEBUG0_TCK Low - "Peripheral mode" CMOS None "DEBUG0: SWCLK; DEBUG0: TCK; GPT0: GTIOCA; SPI1: SSL1" 
-      P301 31 - - - Disabled - - "GPT4: GTIOCB; IRQ0: IRQ06; OPS0: GTOULO; SCI2: RXD_MISO; SCI2: SCL; SLCDC0: COM5; SLCDC0: SEG01; SPI1: SSL2" 
-      P302 30 - - - Disabled - - "GPT4: GTIOCA; IRQ0: IRQ05; OPS0: GTOUUP; SCI2: SDA; SCI2: TXD_MOSI; SLCDC0: COM6; SLCDC0: SEG02; SPI1: SSL3" 
+      P301 31 SCI2_SCL Low None "Peripheral mode" "n-ch open drain" None "GPT4: GTIOCB; IRQ0: IRQ06; OPS0: GTOULO; SCI2: RXD_MISO; SCI2: SCL; SLCDC0: COM5; SLCDC0: SEG01; SPI1: SSL2" 
+      P302 30 SCI2_SDA Low None "Peripheral mode" "n-ch open drain" None "GPT4: GTIOCA; IRQ0: IRQ05; OPS0: GTOUUP; SCI2: SDA; SCI2: TXD_MOSI; SLCDC0: COM6; SLCDC0: SEG02; SPI1: SSL3" 
       P303 29 - - - Disabled - - "GPT7: GTIOCB; SLCDC0: COM7; SLCDC0: SEG03" 
       P304 28 GPIO - IRQ9 "Input mode" - None "GPT7: GTIOCA; IRQ0: IRQ09; SLCDC0: SEG17" 
       P400 1 GPIO Medium None "Output mode (Initial Low)" CMOS None "CTSU0: TS20; GPT6: GTIOCA; IIC0: SCL; IRQ0: IRQ00; SCI4: SCK; SSI: AUDIO_CLK" 
@@ -318,7 +318,7 @@ Synergy Configuration
       Digital Filtering Sample Clock (Only valid when Digital Filtering is Enabled): PCLK / 64
       Interrupt enabled after initialization: True
       Callback: button_callback
-      Pin Interrupt Priority: Priority 6
+      Pin Interrupt Priority: Priority 1
       
     Instance "g_sf_power_profiles_v2_low_power_0 Power Profiles V2 Low Power Profile"
       Name: g_sf_power_profiles_v2_low_power_0
@@ -420,7 +420,7 @@ Synergy Configuration
       Digital Filtering Sample Clock (Only valid when Digital Filtering is Enabled): PCLK / 64
       Interrupt enabled after initialization: True
       Callback: accelerometer_callback
-      Pin Interrupt Priority: Priority 6
+      Pin Interrupt Priority: Priority 1
       
     Instance "flash_driver Flash Driver on r_flash_lp"
       Name: flash_driver
@@ -442,7 +442,7 @@ Synergy Configuration
       Digital Filtering Sample Clock (Only valid when Digital Filtering is Enabled): PCLK / 64
       Interrupt enabled after initialization: True
       Callback: detect_charger_callback
-      Pin Interrupt Priority: Priority 6
+      Pin Interrupt Priority: Priority 1
       
   Thread "Modem Receiver"
     Symbol: uart0_receive_thread
@@ -450,7 +450,7 @@ Synergy Configuration
     Stack size (bytes): 1024
     Priority: 2
     Auto start: Enabled
-    Time slicing interval (ticks): 10
+    Time slicing interval (ticks): 1
     
     Instance "g_sf_modem_uart0 Communications Framework on sf_uart_comms"
       Name: g_sf_modem_uart0
@@ -523,7 +523,7 @@ Synergy Configuration
     Stack size (bytes): 4096
     Priority: 10
     Auto start: Enabled
-    Time slicing interval (ticks): 100
+    Time slicing interval (ticks): 1
     
     Instance "g_sf_i2c_bme280 I2C Framework Device on sf_i2c"
       Name: g_sf_i2c_bme280
@@ -751,6 +751,6 @@ Synergy Configuration
     Stack size (bytes): 1024
     Priority: 1
     Auto start: Enabled
-    Time slicing interval (ticks): 10
+    Time slicing interval (ticks): 1
     
   Messaging

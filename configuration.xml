@@ -240,7 +240,7 @@
       <property id="module.driver.external_irq.pclk_div" value="module.driver.external_irq.pclk_div.pclk_div_by_64"/>
       <property id="module.driver.external_irq.interrupt_enable" value="module.driver.external_irq.interrupt_enable.true"/>
       <property id="module.driver.external_irq.p_callback" value="button_callback"/>
-      <property id="module.driver.external_irq.irq_ipl" value="board.icu.common.irq.priority6"/>
+      <property id="module.driver.external_irq.irq_ipl" value="board.icu.common.irq.priority1"/>
     </module>
     <module id="module.framework.sf_power_profiles_v2_low_power_on_sf_power_profiles_v2.1812410776">
       <property id="module.framework.sf_power_profiles_v2_low_power.name" value="g_sf_power_profiles_v2_low_power_0"/>
@@ -334,7 +334,7 @@
       <property id="module.driver.external_irq.pclk_div" value="module.driver.external_irq.pclk_div.pclk_div_by_64"/>
       <property id="module.driver.external_irq.interrupt_enable" value="module.driver.external_irq.interrupt_enable.true"/>
       <property id="module.driver.external_irq.p_callback" value="accelerometer_callback"/>
-      <property id="module.driver.external_irq.irq_ipl" value="board.icu.common.irq.priority6"/>
+      <property id="module.driver.external_irq.irq_ipl" value="board.icu.common.irq.priority1"/>
     </module>
     <module id="module.driver.flash_on_flash_lp.1475560137">
       <property id="module.driver.flash.name" value="flash_driver"/>
@@ -474,7 +474,7 @@
       <property id="module.driver.external_irq.pclk_div" value="module.driver.external_irq.pclk_div.pclk_div_by_64"/>
       <property id="module.driver.external_irq.interrupt_enable" value="module.driver.external_irq.interrupt_enable.true"/>
       <property id="module.driver.external_irq.p_callback" value="detect_charger_callback"/>
-      <property id="module.driver.external_irq.irq_ipl" value="board.icu.common.irq.priority6"/>
+      <property id="module.driver.external_irq.irq_ipl" value="board.icu.common.irq.priority1"/>
     </module>
     <module id="module.driver.transfer_on_dtc.870922632">
       <property id="module.driver.transfer.name" value="g_transfer3"/>
@@ -524,7 +524,7 @@
       <property id="rtos.threadx.thread.stack" value="1024"/>
       <property id="rtos.threadx.thread.priority" value="2"/>
       <property id="rtos.threadx.thread.autostart" value="rtos.threadx.thread.autostart.enabled"/>
-      <property id="rtos.threadx.thread.timeslice" value="10"/>
+      <property id="rtos.threadx.thread.timeslice" value="1"/>
       <stack module="module.framework.sf_comms_on_sf_uart_comms.473128970">
         <stack module="module.driver.uart_on_sci_uart.629024527" requires="module.framework.sf_comms_on_sf_uart_comms.requires.uart">
           <stack module="module.driver.transfer_on_dtc.1863934703" requires="module.driver.uart_on_sci_uart.requires.transfer_tx"/>
@@ -538,7 +538,7 @@
       <property id="rtos.threadx.thread.stack" value="4096"/>
       <property id="rtos.threadx.thread.priority" value="10"/>
       <property id="rtos.threadx.thread.autostart" value="rtos.threadx.thread.autostart.enabled"/>
-      <property id="rtos.threadx.thread.timeslice" value="100"/>
+      <property id="rtos.threadx.thread.timeslice" value="1"/>
       <stack module="module.framework.sf_i2c_on_sf_i2c_v2.1413731321">
         <stack module="module.framework.sf_i2c_bus_on_sf_i2c_v2.1785859700" requires="module.framework.sf_i2c_on_sf_i2c.requires.sf_i2c_bus_v2">
           <stack module="module.driver.i2c_on_sci_i2c.295398344" requires="module.framework.sf_i2c_on_sf_i2c.requires.i2c">
@@ -578,7 +578,7 @@
       <property id="rtos.threadx.thread.stack" value="1024"/>
       <property id="rtos.threadx.thread.priority" value="1"/>
       <property id="rtos.threadx.thread.autostart" value="rtos.threadx.thread.autostart.enabled"/>
-      <property id="rtos.threadx.thread.timeslice" value="10"/>
+      <property id="rtos.threadx.thread.timeslice" value="1"/>
     </context>
     <config id="config.framework.sf_power_profiles_v2">
       <property id="config.framework.sf_power_profiles_v2.param_checking_enable" value="config.framework.sf_power_profiles_v2.param_checking_enable.bsp"/>

@@ -119,6 +119,14 @@ const ioport_pin_cfg_t low_pwr_config_data[] = {
 		.pin_cfg = (IOPORT_CFG_IRQ_ENABLE | IOPORT_CFG_PORT_DIRECTION_INPUT),
 	},
 	{
+		.pin = IOPORT_PORT_01_PIN_00,
+		.pin_cfg = (IOPORT_CFG_PERIPHERAL_PIN | IOPORT_PERIPHERAL_SCI0_2_4_6_8),
+	},
+	{
+		.pin = IOPORT_PORT_01_PIN_01,
+		.pin_cfg = (IOPORT_CFG_PERIPHERAL_PIN | IOPORT_PERIPHERAL_SCI0_2_4_6_8),
+	},
+	{
 		.pin = IOPORT_PORT_01_PIN_08,
 		.pin_cfg = (IOPORT_CFG_PERIPHERAL_PIN | IOPORT_PERIPHERAL_DEBUG),
 	},
@@ -157,6 +165,14 @@ const ioport_pin_cfg_t low_pwr_config_data[] = {
 	{
 		.pin = IOPORT_PORT_03_PIN_00,
 		.pin_cfg = (IOPORT_CFG_PERIPHERAL_PIN | IOPORT_PERIPHERAL_DEBUG),
+	},
+	{
+		.pin = IOPORT_PORT_03_PIN_01,
+		.pin_cfg = (IOPORT_CFG_NMOS_ENABLE | IOPORT_CFG_PERIPHERAL_PIN | IOPORT_PERIPHERAL_SCI0_2_4_6_8),
+	},
+	{
+		.pin = IOPORT_PORT_03_PIN_02,
+		.pin_cfg = (IOPORT_CFG_NMOS_ENABLE | IOPORT_CFG_PERIPHERAL_PIN | IOPORT_PERIPHERAL_SCI0_2_4_6_8),
 	},
 	{
 		.pin = IOPORT_PORT_03_PIN_04,

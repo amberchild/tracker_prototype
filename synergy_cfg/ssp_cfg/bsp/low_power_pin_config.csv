@@ -49,7 +49,7 @@ DAC120: DA"
 CMP0: IVCMP5
 DAC121: DA
 IRQ0: IRQ13"
-"P100","48","","","","Disabled","","","ADC0: AN27
+"P100","48","SCI0_RXD_MISO","Low","None","Peripheral mode","CMOS","None","ADC0: AN27
 AGT0: AGTIO
 CMP0: CMPIN0
 IIC1: SCL
@@ -61,7 +61,7 @@ SCI0: SCL
 SCI1: SCK
 SLCDC0: VL1
 SPI0: MISO"
-"P101","47","","","","Disabled","","","ADC0: AN26
+"P101","47","SCI0_TXD_MOSI","Low","None","Peripheral mode","CMOS","None","ADC0: AN26
 AGT0: AGTEE
 CMP0: CMPREF0
 IIC1: SDA
@@ -197,7 +197,7 @@ SCI1: TXD_MOSI"
 DEBUG0: TCK
 GPT0: GTIOCA
 SPI1: SSL1"
-"P301","31","","","","Disabled","","","GPT4: GTIOCB
+"P301","31","SCI2_SCL","Low","None","Peripheral mode","n-ch open drain","None","GPT4: GTIOCB
 IRQ0: IRQ06
 OPS0: GTOULO
 SCI2: RXD_MISO
@@ -205,7 +205,7 @@ SCI2: SCL
 SLCDC0: COM5
 SLCDC0: SEG01
 SPI1: SSL2"
-"P302","30","","","","Disabled","","","GPT4: GTIOCA
+"P302","30","SCI2_SDA","Low","None","Peripheral mode","n-ch open drain","None","GPT4: GTIOCA
 IRQ0: IRQ05
 OPS0: GTOUUP
 SCI2: SDA

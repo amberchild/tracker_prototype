@@ -20,7 +20,7 @@ void led_thread_create(void)
 
     UINT err;
     err = tx_thread_create (&led_thread, (CHAR *) "LED Thread", led_thread_func, (ULONG) NULL, &led_thread_stack, 1024,
-                            1, 1, 10, TX_AUTO_START);
+                            1, 1, 1, TX_AUTO_START);
     if (TX_SUCCESS != err)
     {
         tx_startup_err_callback (&led_thread, 0);

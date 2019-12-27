@@ -23,7 +23,7 @@
 #define SMS_CMD                     9           /*SMS commands used*/
 #define GNSS_OFF_LITMIT             1800        /*Longest time interval in seconds when GNSS module will not be shut down*/
 #define INIT_FAIL_WAKE_UP           900         /*Wake up interval after initialisation failure*/
-#define KEEP_AWAKE_TIME             3600        /*Keep awake time */
+#define KEEP_AWAKE_TIME             750         /*Keep awake time */
 #define KEEP_AWAKE_TIME_EXT         43200       /*Keep awake time extended*/
 #define GPRS_CONNECT_RETRY          3           /*GPRS connect attempts*/
 
@@ -1219,7 +1219,7 @@ static void EphemerisUpdate(const char *pString)
                     result = NULL;
                     result = SCP_SendCommandWaitAnswer("AT#HTTPCFG=0,\"agps.telit.com\",80,1,\"oXnk4wCb\",\"fPcdgS6w\",0,120,1\r", "OK", 2000, 1);
                     if(result) result = SCP_SendCommandWaitAnswer("AT#HTTPQRY=0,0,\"/gps/sifgps.f2p1enc.ee\"\r", "OK", 5000, 1);
-                    if(result) result = SCP_WaitForAnswer("#HTTPRING:", 10000);
+                    if(result) result = SCP_WaitForAnswer("#HTTPRING:", 15000);
                     tx_thread_sleep ((ULONG)(TX_TIMER_TICKS_PER_SECOND));
                     result += 35;
                     if(result)
@@ -1248,7 +1248,7 @@ static void EphemerisUpdate(const char *pString)
                     result = NULL;
                     result = SCP_SendCommandWaitAnswer("AT#HTTPCFG=0,\"agps.telit.com\",80,1,\"oXnk4wCb\",\"fPcdgS6w\",0,120,1\r", "OK", 2000, 1);
                     if(result) result = SCP_SendCommandWaitAnswer("AT#HTTPQRY=0,0,\"/glo/sifglo.f2p1enc.ee\"\r", "OK", 5000, 1);
-                    if(result) result = SCP_WaitForAnswer("#HTTPRING:", 10000);
+                    if(result) result = SCP_WaitForAnswer("#HTTPRING:", 15000);
                     tx_thread_sleep ((ULONG)(TX_TIMER_TICKS_PER_SECOND));
                     result += 35;
                     if(result)
@@ -1271,9 +1271,6 @@ static void EphemerisUpdate(const char *pString)
                     }
                 }
             }
-
-            /*Ephemeris download procedure exit*/
-            led_mode = ONLINE_IDLE;
         }
     }
 }
@@ -1937,17 +1934,9 @@ static void system_startup(void)
     }
 
     /*Apply Default Settings*/
-    if(tracker_settings.mode != CLOUD_MODE)
-    {
-        tracker_settings.interval = 0;
-        tracker_settings.repeat = 0;
-    }
-
-    else
-    {
-        /*Request AGPS on wake up */
-        modem_data.agps_request = true;
-    }
+    tracker_settings.interval = 0;
+    tracker_settings.repeat = 0;
+    modem_data.agps_request = false;
 
 
     /*Power up the sensors*/
@@ -2115,7 +2104,6 @@ static void system_startup(void)
         /*LED blink for initialisation failure*/
         led_mode = CONSTANT_OFF;
 
-        bmx055_init();
         /*Enter Low Power Mode*/
         (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0); /*Enter low power mode*/
 
@@ -2373,6 +2361,13 @@ void tracker_task_entry(void)
                         {
                             /*Upload to cloud*/
                             led_mode = CONSTANT_ON;
+
+                            /*Request AGPS if signal is to week*/
+                            if(atoi(modem_data.gps_satt_in_use) < GNSS_NSAT)
+                            {
+                                modem_data.agps_request = true;
+                            }
+
                             upload_data();
                             led_mode = ONLINE_IDLE;
 
@@ -2387,6 +2382,13 @@ void tracker_task_entry(void)
                             {
                                 /*Upload to cloud*/
                                 led_mode = CONSTANT_ON;
+
+                                /*Request AGPS if signal is to week*/
+                                if(atoi(modem_data.gps_satt_in_use) < GNSS_NSAT)
+                                {
+                                    modem_data.agps_request = true;
+                                }
+
                                 upload_data();
                                 led_mode = ONLINE_IDLE;
 

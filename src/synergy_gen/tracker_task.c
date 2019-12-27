@@ -116,7 +116,7 @@ void tracker_task_create(void)
 
     UINT err;
     err = tx_thread_create (&tracker_task, (CHAR *) "Tracker Task", tracker_task_func, (ULONG) NULL,
-                            &tracker_task_stack, 4096, 10, 10, 100, TX_AUTO_START);
+                            &tracker_task_stack, 4096, 10, 10, 1, TX_AUTO_START);
     if (TX_SUCCESS != err)
     {
         tx_startup_err_callback (&tracker_task, 0);

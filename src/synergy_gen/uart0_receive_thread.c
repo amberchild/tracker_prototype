@@ -200,7 +200,7 @@ void uart0_receive_thread_create(void)
 
     UINT err;
     err = tx_thread_create (&uart0_receive_thread, (CHAR *) "Modem Receiver", uart0_receive_thread_func, (ULONG) NULL,
-                            &uart0_receive_thread_stack, 1024, 2, 2, 10, TX_AUTO_START);
+                            &uart0_receive_thread_stack, 1024, 2, 2, 1, TX_AUTO_START);
     if (TX_SUCCESS != err)
     {
         tx_startup_err_callback (&uart0_receive_thread, 0);

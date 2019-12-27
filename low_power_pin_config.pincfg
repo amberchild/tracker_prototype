@@ -110,4 +110,36 @@
   <v1:configSetting configurationId="p206" altId="p206.input"/>
   <v1:configSetting configurationId="p015.gpio_mode" altId="p015.gpio_mode.gpio_mode_in"/>
   <v1:configSetting configurationId="p206.gpio_pupd" altId="p206.gpio_pupd.gpio_pupd_ip_up"/>
+  <v1:configSetting configurationId="p301.gpio_otype" altId="p301.gpio_otype.gpio_otype_n_ch_od"/>
+  <v1:configSetting configurationId="p301.gpio_mode" altId="p301.gpio_mode.gpio_mode_peripheral"/>
+  <v1:configSetting configurationId="sci0.mode" altId="sci0.mode.asynchronous.free"/>
+  <v1:configSetting configurationId="sci0.rxd" altId="sci0.rxd.p100">
+    <v1:connectionSetting altId="p100.sci0.rxd"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="p302" altId="p302.sci2.sda">
+    <v1:connectionSetting altId="sci2.sda.p302"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="p301" altId="p301.sci2.scl">
+    <v1:connectionSetting altId="sci2.scl.p301"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="sci0.txd" altId="sci0.txd.p101">
+    <v1:connectionSetting altId="p101.sci0.txd"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="p302.gpio_mode" altId="p302.gpio_mode.gpio_mode_peripheral"/>
+  <v1:configSetting configurationId="sci2.sda" altId="sci2.sda.p302">
+    <v1:connectionSetting altId="p302.sci2.sda"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="sci2.scl" altId="sci2.scl.p301">
+    <v1:connectionSetting altId="p301.sci2.scl"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="p302.gpio_otype" altId="p302.gpio_otype.gpio_otype_n_ch_od"/>
+  <v1:configSetting configurationId="sci2.mode" altId="sci2.mode.iic.free"/>
+  <v1:configSetting configurationId="p101.gpio_mode" altId="p101.gpio_mode.gpio_mode_peripheral"/>
+  <v1:configSetting configurationId="p101" altId="p101.sci0.txd">
+    <v1:connectionSetting altId="sci0.txd.p101"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="p100" altId="p100.sci0.rxd">
+    <v1:connectionSetting altId="sci0.rxd.p100"/>
+  </v1:configSetting>
+  <v1:configSetting configurationId="p100.gpio_mode" altId="p100.gpio_mode.gpio_mode_peripheral"/>
 </v1:pinSettings>

@@ -1,6 +1,6 @@
 /* generated HAL source file - do not edit */
 #include "hal_data.h"
-#if (6) != BSP_IRQ_DISABLED
+#if (1) != BSP_IRQ_DISABLED
 #if !defined(SSP_SUPPRESS_ISR_g_external_irq13) && !defined(SSP_SUPPRESS_ISR_ICU13)
 SSP_VECTOR_DEFINE( icu_irq_isr, ICU, IRQ13);
 #endif
@@ -15,7 +15,7 @@ static const external_irq_cfg_t g_external_irq13_cfg =
   .p_callback = detect_charger_callback,
   .p_context = &g_external_irq13,
   .p_extend = NULL,
-  .irq_ipl = (6), };
+  .irq_ipl = (1), };
 /* Instance structure to use this module. */
 const external_irq_instance_t g_external_irq13 =
 { .p_ctrl = &g_external_irq13_ctrl, .p_cfg = &g_external_irq13_cfg, .p_api = &g_external_irq_on_icu };
@@ -38,7 +38,7 @@ const flash_cfg_t flash_driver_cfg =
 /* Instance structure to use this module. */
 const flash_instance_t flash_driver =
 { .p_ctrl = &flash_driver_ctrl, .p_cfg = &flash_driver_cfg, .p_api = &g_flash_on_flash_lp };
-#if (6) != BSP_IRQ_DISABLED
+#if (1) != BSP_IRQ_DISABLED
 #if !defined(SSP_SUPPRESS_ISR_g_external_irq9) && !defined(SSP_SUPPRESS_ISR_ICU9)
 SSP_VECTOR_DEFINE( icu_irq_isr, ICU, IRQ9);
 #endif
@@ -53,7 +53,7 @@ static const external_irq_cfg_t g_external_irq9_cfg =
   .p_callback = accelerometer_callback,
   .p_context = &g_external_irq9,
   .p_extend = NULL,
-  .irq_ipl = (6), };
+  .irq_ipl = (1), };
 /* Instance structure to use this module. */
 const external_irq_instance_t g_external_irq9 =
 { .p_ctrl = &g_external_irq9_ctrl, .p_cfg = &g_external_irq9_cfg, .p_api = &g_external_irq_on_icu };
@@ -95,7 +95,7 @@ sf_power_profiles_v2_low_power_cfg_t g_sf_power_profiles_v2_low_power_0 =
 /************************************************************/
 /** End PPM V2 Low Power Profile ****************************/
 /************************************************************/
-#if (6) != BSP_IRQ_DISABLED
+#if (1) != BSP_IRQ_DISABLED
 #if !defined(SSP_SUPPRESS_ISR_g_external_irq0) && !defined(SSP_SUPPRESS_ISR_ICU0)
 SSP_VECTOR_DEFINE( icu_irq_isr, ICU, IRQ0);
 #endif
@@ -110,7 +110,7 @@ static const external_irq_cfg_t g_external_irq0_cfg =
   .p_callback = button_callback,
   .p_context = &g_external_irq0,
   .p_extend = NULL,
-  .irq_ipl = (6), };
+  .irq_ipl = (1), };
 /* Instance structure to use this module. */
 const external_irq_instance_t g_external_irq0 =
 { .p_ctrl = &g_external_irq0_ctrl, .p_cfg = &g_external_irq0_cfg, .p_api = &g_external_irq_on_icu };

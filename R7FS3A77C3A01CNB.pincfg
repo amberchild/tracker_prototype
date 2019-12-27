@@ -113,27 +113,27 @@
     <v1:connectionSetting altId="p301.sci2.scl"/>
   </v1:configSetting>
   <v1:configSetting configurationId="sci3.mode" altId="sci3.mode.disabled"/>
-  <v1:configSetting configurationId="p015" altId="p015.input"></v1:configSetting>
+  <v1:configSetting configurationId="p015" altId="p015.input"/>
   <v1:configSetting configurationId="usbfs0.vbus" altId="usbfs0.vbus.p407">
     <v1:connectionSetting altId="p407.usbfs0.vbus"/>
   </v1:configSetting>
   <v1:configSetting configurationId="p206.gpio_mode" altId="p206.gpio_mode.gpio_mode_in"/>
   <v1:configSetting configurationId="p302.gpio_otype" altId="p302.gpio_otype.gpio_otype_n_ch_od"/>
-  <v1:configSetting configurationId="irq0.irq00" altId="irq0.irq00.none"></v1:configSetting>
+  <v1:configSetting configurationId="irq0.irq00" altId="irq0.irq00.none"/>
   <v1:configSetting configurationId="rtc0.rtcout" altId="rtc0.rtcout.none"/>
   <v1:configSetting configurationId="rtc0.mode" altId="rtc0.mode.enabled"/>
   <v1:configSetting configurationId="sci2.mode" altId="sci2.mode.iic.free"/>
   <v1:configSetting configurationId="p407" altId="p407.usbfs0.vbus">
     <v1:connectionSetting altId="usbfs0.vbus.p407"/>
   </v1:configSetting>
-  <v1:configSetting configurationId="p206" altId="p206.input"></v1:configSetting>
+  <v1:configSetting configurationId="p206" altId="p206.input"/>
   <v1:configSetting configurationId="p015.gpio_mode" altId="p015.gpio_mode.gpio_mode_in"/>
   <v1:configSetting configurationId="dac0.da" altId="dac0.da.none"/>
   <v1:configSetting configurationId="p201.gpio_mode" altId="p201.gpio_mode.gpio_mode_in"/>
   <v1:configSetting configurationId="p401.gpio_mode" altId="p401.gpio_mode.gpio_mode_out.low"/>
   <v1:configSetting configurationId="p400.gpio_mode" altId="p400.gpio_mode.gpio_mode_out.high"/>
   <v1:configSetting configurationId="p200.gpio_mode" altId="p200.gpio_mode.gpio_mode_in"/>
-  <v1:configSetting configurationId="p304" altId="p304.input"></v1:configSetting>
+  <v1:configSetting configurationId="p304" altId="p304.input"/>
   <v1:configSetting configurationId="p303" altId="p303.input"/>
   <v1:configSetting configurationId="p500.gpio_mode" altId="p500.gpio_mode.gpio_mode_in"/>
   <v1:configSetting configurationId="p501.gpio_mode" altId="p501.gpio_mode.gpio_mode_in"/>
@@ -166,9 +166,9 @@
   <v1:configSetting configurationId="p112" altId="p112.output.low"/>
   <v1:configSetting configurationId="p111" altId="p111.output.low"/>
   <v1:configSetting configurationId="p113.gpio_mode" altId="p113.gpio_mode.gpio_mode_out.low"/>
-  <v1:configSetting configurationId="irq0.irq13" altId="irq0.irq13.none"></v1:configSetting>
+  <v1:configSetting configurationId="irq0.irq13" altId="irq0.irq13.none"/>
   <v1:configSetting configurationId="p015.gpio_irq" altId="p015.gpio_irq.gpio_irq_enabled"/>
   <v1:configSetting configurationId="p304.gpio_irq" altId="p304.gpio_irq.gpio_irq_enabled"/>
-  <v1:configSetting configurationId="irq0.irq09" altId="irq0.irq09.none"></v1:configSetting>
+  <v1:configSetting configurationId="irq0.irq09" altId="irq0.irq09.none"/>
   <v1:configSetting configurationId="p206.gpio_pupd" altId="p206.gpio_pupd.gpio_pupd_ip_up"/>
 </v1:pinSettings>
