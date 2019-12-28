@@ -24,7 +24,7 @@
 #define GNSS_OFF_LITMIT             1800        /*Longest time interval in seconds when GNSS module will not be shut down*/
 #define INIT_FAIL_WAKE_UP           900         /*Wake up interval after initialisation failure*/
 #define KEEP_AWAKE_TIME             750         /*Keep awake time */
-#define KEEP_AWAKE_TIME_EXT         43200       /*Keep awake time extended*/
+#define KEEP_AWAKE_TIME_EXT         3600        /*Keep awake time extended*/
 #define GPRS_CONNECT_RETRY          3           /*GPRS connect attempts*/
 
 /*SMS with google maps link template*/
@@ -344,7 +344,7 @@ void lpm_callback(sf_power_profiles_v2_callback_args_t *p_args)
         if(tracker_settings.mode == POWER_SAVING_RTC)
         {
             bmx055_deinit();
-            sensors_power_off();
+            //sensors_power_off();
         }
         bme280_deinit();
     }
@@ -1800,14 +1800,21 @@ static void upload_data(void)
 
 static void battery_critical_shut_down(void)
 {
+    ssp_err_t err;
+
+    /*Shut down some of wake up sources*/
     g_rtc0.p_api->close(g_rtc0.p_ctrl);
-    if(tracker_settings.mode == POWER_SAVING_ACC)
-    {
-        g_external_irq9.p_api->close(g_external_irq9.p_ctrl);
-        bmx055_deinit();
-    }
+    bmx055_deinit();
+
     /*Enter Low Power Mode*/
      (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0); /*Enter low power mode*/
+
+     /*RTC*/
+     err = g_rtc0.p_api->open(g_rtc0.p_ctrl, g_rtc0.p_cfg);
+     if(err) { APP_ERR_TRAP(err); }
+     user_function_set_rtc_time();
+
+
 }
 
 static void low_level_init(void)
@@ -2045,6 +2052,7 @@ static void system_startup(void)
     if(voltage <= SHUT_DOWN_VOLTAGE)
     {
         battery_critical_shut_down();
+        goto modem_start;
     }
 
     /*GSM network and GNSS module status*/
@@ -2097,6 +2105,7 @@ static void system_startup(void)
         modem_data.gsm_pwr_status = false;
         modem_data.gnss_pwr_status = false;
         bme280_deinit();
+        //bmx055_deinit();
 
         /*Alarm setup*/
         user_function_set_rtc_alarm((time_t)INIT_FAIL_WAKE_UP);
@@ -2119,6 +2128,7 @@ void tracker_task_entry(void)
     ssp_err_t err;
     time_t current_time;
     ioport_level_t p_pin_value;
+    char * scp_result = NULL;
 
     /*Initialise hardware that will retain configuration in low power mode*/
     low_level_init();
@@ -2126,6 +2136,7 @@ void tracker_task_entry(void)
     while (1)
     {
         /*Setup Telit modem and BOSH sensors always on wake up or startup*/
+        system_start:
         system_startup();
 
         /*Initial alarm state is true*/
@@ -2141,14 +2152,23 @@ void tracker_task_entry(void)
             {
                 while(tracker_settings.mode == NORMAL_MODE)
                 {
+                    /*Modem AT command check*/
+                    for(i = 10; i > 0; i--)
+                    {
+                        /*Try AT command*/
+                        scp_result = SCP_SendCommandWaitAnswer("AT\r\n", "OK", 100, 1);
+                        if(scp_result) break;
+                    }
+                    if(!scp_result)
+                    goto system_start;
+
                     /*Check if we still have to keep tracker awake*/
                     current_time = user_function_get_rtc_time();
                     if(((current_time - sensors_data.last_movement) > KEEP_AWAKE_TIME) && (tracker_settings.repeat == 0))
                     {
-                        bmx055_init();
                         /*Enter Low Power Mode*/
                         (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0);
-                        break;
+                        goto system_start;
                     }
 
                     /*Look for URC (Unsolicited Result Code)*/
@@ -2222,6 +2242,16 @@ void tracker_task_entry(void)
                 tracker_settings.interval = 0;
                 tracker_settings.repeat = 0;
 
+                /*Modem AT command check*/
+                for(i = 10; i > 0; i--)
+                {
+                    /*Try AT command*/
+                    scp_result = SCP_SendCommandWaitAnswer("AT\r\n", "OK", 100, 1);
+                    if(scp_result) break;
+                }
+                if(!scp_result)
+                goto system_start;
+
                 /*Read GNSS data, wait for satellites */
                 for(i = 0; i < GNSS_SAT_WAIT; i++)
                 {
@@ -2287,6 +2317,16 @@ void tracker_task_entry(void)
                 tracker_settings.interval = 0;
                 tracker_settings.repeat = 0;
 
+                /*Modem AT command check*/
+                for(i = 10; i > 0; i--)
+                {
+                    /*Try AT command*/
+                    scp_result = SCP_SendCommandWaitAnswer("AT\r\n", "OK", 100, 1);
+                    if(scp_result) break;
+                }
+                if(!scp_result)
+                goto system_start;
+
                 /*Read GNSS data, wait for satellites */
                 for(i = 0; i < GNSS_SAT_WAIT; i++)
                 {
@@ -2350,6 +2390,16 @@ void tracker_task_entry(void)
             {
                 while(tracker_settings.mode == CLOUD_MODE)
                 {
+                    /*Modem AT command check*/
+                    for(i = 10; i > 0; i--)
+                    {
+                        /*Try AT command*/
+                        scp_result = SCP_SendCommandWaitAnswer("AT\r\n", "OK", 100, 1);
+                        if(scp_result) break;
+                    }
+                    if(!scp_result)
+                    goto system_start;
+
                     /*Check if we still have to keep tracker awake*/
                     current_time = user_function_get_rtc_time();
                     if(((current_time - sensors_data.last_movement) > KEEP_AWAKE_TIME) && (tracker_settings.repeat == 0))
@@ -2359,42 +2409,36 @@ void tracker_task_entry(void)
 
                         if(p_pin_value == IOPORT_LEVEL_LOW)
                         {
-                            /*Upload to cloud*/
                             led_mode = CONSTANT_ON;
 
-                            /*Request AGPS if signal is to week*/
-                            if(atoi(modem_data.gps_satt_in_use) < GNSS_NSAT)
-                            {
-                                modem_data.agps_request = true;
-                            }
+                            /*Request AGPS */
+                            modem_data.agps_request = true;
 
+                            /*Upload to cloud*/
                             upload_data();
                             led_mode = ONLINE_IDLE;
 
                             /*Enter Low Power Mode*/
                             (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0);
-                            break;
+                            goto system_start;
                         }
                         /*Extend wake up time if the cable is attached*/
                         else
                         {
                             if(((current_time - sensors_data.last_movement) > KEEP_AWAKE_TIME_EXT) && (tracker_settings.repeat == 0))
                             {
-                                /*Upload to cloud*/
                                 led_mode = CONSTANT_ON;
 
-                                /*Request AGPS if signal is to week*/
-                                if(atoi(modem_data.gps_satt_in_use) < GNSS_NSAT)
-                                {
-                                    modem_data.agps_request = true;
-                                }
+                                /*Request AGPS */
+                                modem_data.agps_request = true;
 
+                                /*Upload to cloud*/
                                 upload_data();
                                 led_mode = ONLINE_IDLE;
 
                                 /*Enter Low Power Mode*/
                                 (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0);
-                                break;
+                                goto system_start;
                             }
                         }
                     }
@@ -2444,6 +2488,7 @@ void tracker_task_entry(void)
                         led_mode = ONLINE_IDLE;
                         /*Shut down*/
                         battery_critical_shut_down();
+                        goto system_start;
                     }
 
                     /*Store signal quality*/
