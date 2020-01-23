@@ -1800,20 +1800,15 @@ static void upload_data(void)
 
 static void battery_critical_shut_down(void)
 {
-    ssp_err_t err;
 
-    /*Shut down some of wake up sources*/
-    g_rtc0.p_api->close(g_rtc0.p_ctrl);
+    /*Shut down accelerometer*/
     bmx055_deinit();
+
+    /*Shut down GNSS module*/
+    GNSS_Off();
 
     /*Enter Low Power Mode*/
      (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0); /*Enter low power mode*/
-
-     /*RTC*/
-     err = g_rtc0.p_api->open(g_rtc0.p_ctrl, g_rtc0.p_cfg);
-     if(err) { APP_ERR_TRAP(err); }
-     user_function_set_rtc_time();
-
 
 }
 
@@ -2102,6 +2097,7 @@ static void system_startup(void)
         /*Turn off everything?*/
         led_mode = CONSTANT_OFF;
         GSM_deinit();
+        GNSS_Off();
         modem_data.gsm_pwr_status = false;
         modem_data.gnss_pwr_status = false;
         bme280_deinit();
@@ -2143,7 +2139,6 @@ void tracker_task_entry(void)
         alarm_flag = true;
 
         mode_select:
-
         /*Select operation mode*/
         switch (tracker_settings.mode)
         {
