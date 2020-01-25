@@ -25,6 +25,8 @@
 #define INIT_FAIL_WAKE_UP           900         /*Wake up interval after initialisation failure*/
 #define KEEP_AWAKE_TIME             750         /*Keep awake time */
 #define KEEP_AWAKE_TIME_EXT         3600        /*Keep awake time extended*/
+#define KEEP_ONLINE_TIME            900         /*Keep online time*/
+#define SLEEP_DURATION              3600        /*Sleep duration after online time expired*/
 #define GPRS_CONNECT_RETRY          3           /*GPRS connect attempts*/
 
 /*SMS with google maps link template*/
@@ -352,8 +354,8 @@ void lpm_callback(sf_power_profiles_v2_callback_args_t *p_args)
     /*Returning from Low Power Mode*/
     if(p_args->event == SF_POWER_PROFILES_V2_EVENT_POST_LOW_POWER)
     {
-        /*Close Low Power Module Framework*/
-        //(void) g_sf_power_profiles_v2_common.p_api->close(g_sf_power_profiles_v2_common.p_ctrl);
+        /*Restart*/
+        NVIC_SystemReset();
     }
 }
 
@@ -1804,11 +1806,15 @@ static void battery_critical_shut_down(void)
     /*Shut down accelerometer*/
     bmx055_deinit();
 
-    /*Shut down GNSS module*/
+    /*Shut down modules*/
     GNSS_Off();
+    ModemOff();
+
+    modem_data.gsm_pwr_status = false;
+    modem_data.gnss_pwr_status = false;
 
     /*Enter Low Power Mode*/
-     (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0); /*Enter low power mode*/
+     (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0);
 
 }
 
@@ -1893,6 +1899,9 @@ static void low_level_init(void)
     /*Count the last movement from startup*/
     sensors_data.last_movement = user_function_get_rtc_time();
 
+    /*Save start up time moment*/
+    modem_data.startup_time = sensors_data.last_movement;
+
     /*Button IRQ0 interrupt*/
     err =  g_external_irq0.p_api->open(g_external_irq0.p_ctrl, g_external_irq0.p_cfg);
     if(err) { APP_ERR_TRAP(err); }
@@ -1919,10 +1928,9 @@ static void system_startup(void)
     _Bool init_OK = false;
     char * scp_result = NULL;
     int32_t voltage = 0;
-    ssp_err_t err;
+    ioport_level_t p_pin_value;
 
     /*Initialise GL865 V3.1 Modem and sensors*/
-    modem_start:
 
     led_mode = LED_SYSTEM_INIT;
 
@@ -1930,21 +1938,15 @@ static void system_startup(void)
     if(OpenDriver())
     {
         /*Read whole structure from DATA memory to RAM*/
-        err = ReadSettings( &tracker_settings, sizeof(tracker_settings) );
+        ReadSettings( &tracker_settings, sizeof(tracker_settings) );
         /*Flash driver close*/
-        if(!err) CloseDriver();
+        CloseDriver();
     }
 
     /*Apply Default Settings*/
     tracker_settings.interval = 0;
     tracker_settings.repeat = 0;
     modem_data.agps_request = false;
-
-
-    /*Power up the sensors*/
-    sensors_power_off();
-    tx_thread_sleep ((ULONG)(TX_TIMER_TICKS_PER_SECOND/5));
-    sensors_power_on();
 
     /*Initialise BME280 Sensors*/
     bme280_init_status = bme280_init();
@@ -2047,7 +2049,6 @@ static void system_startup(void)
     if(voltage <= SHUT_DOWN_VOLTAGE)
     {
         battery_critical_shut_down();
-        goto modem_start;
     }
 
     /*GSM network and GNSS module status*/
@@ -2094,26 +2095,27 @@ static void system_startup(void)
     {
         init_failure:
 
-        /*Turn off everything?*/
+        /*Prepare to slape and wake up on next movement*/
         led_mode = CONSTANT_OFF;
         GSM_deinit();
         GNSS_Off();
         modem_data.gsm_pwr_status = false;
         modem_data.gnss_pwr_status = false;
         bme280_deinit();
-        //bmx055_deinit();
 
-        /*Alarm setup*/
-        user_function_set_rtc_alarm((time_t)INIT_FAIL_WAKE_UP);
+        /*Read USB cable status*/
+        g_ioport.p_api->pinRead(IOPORT_PORT_00_PIN_15, &p_pin_value);
+        if(p_pin_value == IOPORT_LEVEL_LOW)
+        {
+            /*Alarm setup*/
+            user_function_set_rtc_alarm((time_t)INIT_FAIL_WAKE_UP);
+        }
 
         /*LED blink for initialisation failure*/
         led_mode = CONSTANT_OFF;
 
         /*Enter Low Power Mode*/
-        (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0); /*Enter low power mode*/
-
-        /*Restart on wake up*/
-        goto modem_start;
+        (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0);
     }
 }
 
@@ -2163,7 +2165,6 @@ void tracker_task_entry(void)
                     {
                         /*Enter Low Power Mode*/
                         (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0);
-                        goto system_start;
                     }
 
                     /*Look for URC (Unsolicited Result Code)*/
@@ -2411,11 +2412,10 @@ void tracker_task_entry(void)
 
                             /*Upload to cloud*/
                             upload_data();
-                            led_mode = ONLINE_IDLE;
+                            led_mode = CONSTANT_OFF;
 
                             /*Enter Low Power Mode*/
                             (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0);
-                            goto system_start;
                         }
                         /*Extend wake up time if the cable is attached*/
                         else
@@ -2429,12 +2429,34 @@ void tracker_task_entry(void)
 
                                 /*Upload to cloud*/
                                 upload_data();
-                                led_mode = ONLINE_IDLE;
+                                led_mode = CONSTANT_OFF;
 
                                 /*Enter Low Power Mode*/
                                 (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0);
-                                goto system_start;
                             }
+                        }
+                    }
+
+                    /*Do not allow to be online on batteries longer than certain time defined*/
+                    g_ioport.p_api->pinRead(IOPORT_PORT_00_PIN_15, &p_pin_value);
+                    if(p_pin_value == IOPORT_LEVEL_LOW)
+                    {
+                        /*Check if we still have to keep tracker awake*/
+                        current_time = user_function_get_rtc_time();
+                        if(((current_time - modem_data.startup_time) > KEEP_ONLINE_TIME) && (tracker_settings.repeat == 0))
+                        {
+                            /*Shut down accelerometer*/
+                            bmx055_deinit();
+
+                            /*Shut down modem*/
+                            ModemOff();
+                            modem_data.gsm_pwr_status = false;
+
+                            /*Setup RTC timer for wake up*/
+                            user_function_set_rtc_alarm((time_t)SLEEP_DURATION);
+
+                            /*Enter Low Power Mode*/
+                             (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0);
                         }
                     }
 
@@ -2477,13 +2499,9 @@ void tracker_task_entry(void)
                     /*Battery critical shut down*/
                     if((modem_data.batt_voltage_mv <= SHUT_DOWN_VOLTAGE) && (modem_data.batt_voltage_mv != 0))
                     {
-                        /*Upload to cloud*/
-                        led_mode = CONSTANT_ON;
-                        upload_data();
-                        led_mode = ONLINE_IDLE;
+                        led_mode = CONSTANT_OFF;
                         /*Shut down*/
                         battery_critical_shut_down();
-                        goto system_start;
                     }
 
                     /*Store signal quality*/

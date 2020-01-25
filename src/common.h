@@ -46,6 +46,7 @@ typedef struct
     int32_t bmx055_xy_angle;
     time_t last_movement;
 
+
 } sensors_data_storage_t;
 
 typedef struct
@@ -98,6 +99,7 @@ typedef struct
     char gps_course[16];
     char gps_speed[16];
     char gps_satt_in_use[16];
+    time_t startup_time;
 
 
 } modem_data_storage_t;
