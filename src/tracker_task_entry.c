@@ -2095,7 +2095,7 @@ static void system_startup(void)
     {
         init_failure:
 
-        /*Prepare to slape and wake up on next movement*/
+        /*Prepare to sleep and wake up on next movement*/
         led_mode = CONSTANT_OFF;
         GSM_deinit();
         GNSS_Off();
@@ -2126,7 +2126,6 @@ void tracker_task_entry(void)
     ssp_err_t err;
     time_t current_time;
     ioport_level_t p_pin_value;
-    char * scp_result = NULL;
 
     /*Initialise hardware that will retain configuration in low power mode*/
     low_level_init();
@@ -2134,7 +2133,6 @@ void tracker_task_entry(void)
     while (1)
     {
         /*Setup Telit modem and BOSH sensors always on wake up or startup*/
-        system_start:
         system_startup();
 
         /*Initial alarm state is true*/
@@ -2149,16 +2147,6 @@ void tracker_task_entry(void)
             {
                 while(tracker_settings.mode == NORMAL_MODE)
                 {
-                    /*Modem AT command check*/
-                    for(i = 10; i > 0; i--)
-                    {
-                        /*Try AT command*/
-                        scp_result = SCP_SendCommandWaitAnswer("AT\r\n", "OK", 100, 1);
-                        if(scp_result) break;
-                    }
-                    if(!scp_result)
-                    goto system_start;
-
                     /*Check if we still have to keep tracker awake*/
                     current_time = user_function_get_rtc_time();
                     if(((current_time - sensors_data.last_movement) > KEEP_AWAKE_TIME) && (tracker_settings.repeat == 0))
@@ -2238,16 +2226,6 @@ void tracker_task_entry(void)
                 tracker_settings.interval = 0;
                 tracker_settings.repeat = 0;
 
-                /*Modem AT command check*/
-                for(i = 10; i > 0; i--)
-                {
-                    /*Try AT command*/
-                    scp_result = SCP_SendCommandWaitAnswer("AT\r\n", "OK", 100, 1);
-                    if(scp_result) break;
-                }
-                if(!scp_result)
-                goto system_start;
-
                 /*Read GNSS data, wait for satellites */
                 for(i = 0; i < GNSS_SAT_WAIT; i++)
                 {
@@ -2313,16 +2291,6 @@ void tracker_task_entry(void)
                 tracker_settings.interval = 0;
                 tracker_settings.repeat = 0;
 
-                /*Modem AT command check*/
-                for(i = 10; i > 0; i--)
-                {
-                    /*Try AT command*/
-                    scp_result = SCP_SendCommandWaitAnswer("AT\r\n", "OK", 100, 1);
-                    if(scp_result) break;
-                }
-                if(!scp_result)
-                goto system_start;
-
                 /*Read GNSS data, wait for satellites */
                 for(i = 0; i < GNSS_SAT_WAIT; i++)
                 {
@@ -2386,16 +2354,6 @@ void tracker_task_entry(void)
             {
                 while(tracker_settings.mode == CLOUD_MODE)
                 {
-                    /*Modem AT command check*/
-                    for(i = 10; i > 0; i--)
-                    {
-                        /*Try AT command*/
-                        scp_result = SCP_SendCommandWaitAnswer("AT\r\n", "OK", 100, 1);
-                        if(scp_result) break;
-                    }
-                    if(!scp_result)
-                    goto system_start;
-
                     /*Check if we still have to keep tracker awake*/
                     current_time = user_function_get_rtc_time();
                     if(((current_time - sensors_data.last_movement) > KEEP_AWAKE_TIME) && (tracker_settings.repeat == 0))
