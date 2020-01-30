@@ -23,9 +23,9 @@
 #define SMS_CMD                     9           /*SMS commands used*/
 #define GNSS_OFF_LITMIT             1800        /*Longest time interval in seconds when GNSS module will not be shut down*/
 #define INIT_FAIL_WAKE_UP           900         /*Wake up interval after initialisation failure*/
-#define KEEP_AWAKE_TIME             750         /*Keep awake time */
+#define KEEP_AWAKE_TIME             300         /*Keep awake time */
 #define KEEP_AWAKE_TIME_EXT         3600        /*Keep awake time extended*/
-#define KEEP_ONLINE_TIME            900         /*Keep online time*/
+#define KEEP_ONLINE_TIME            1200         /*Keep online time*/
 #define SLEEP_DURATION              3600        /*Sleep duration after online time expired*/
 #define GPRS_CONNECT_RETRY          3           /*GPRS connect attempts*/
 
@@ -2038,7 +2038,7 @@ static void system_startup(void)
     /*Enable the caller number identification.*/
     if (scp_result) scp_result = SCP_SendCommandWaitAnswer("AT+CLIP=1\r", "OK", 2000, 1);
     /*CPU Clock Mode.*/
-    if (scp_result) scp_result = SCP_SendCommandWaitAnswer("AT#CPUMODE=6\r", "OK", 2000, 1);
+    //if (scp_result) scp_result = SCP_SendCommandWaitAnswer("AT#CPUMODE=6\r", "OK", 2000, 1);
     /*Set APN*/
     memset(post_buff, 0, sizeof(post_buff));
     sprintf(post_buff, "AT+CGDCONT=1,\"IP\",\"%s\"\r", tracker_settings.APN);
