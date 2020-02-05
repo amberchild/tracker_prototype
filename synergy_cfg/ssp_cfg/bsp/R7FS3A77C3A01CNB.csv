@@ -225,7 +225,7 @@ IIC0: SCL
 IRQ0: IRQ00
 SCI4: SCK
 SSI: AUDIO_CLK"
-"P401","2","GPIO","Low","None","Output mode (Initial Low)","CMOS","None","CAN0: CTX
+"P401","2","GPIO","Medium","None","Output mode (Initial High)","CMOS","None","CAN0: CTX
 CTSU0: TS19
 GPT6: GTIOCB
 IIC0: SDA

@@ -130,7 +130,7 @@
   <v1:configSetting configurationId="p015.gpio_mode" altId="p015.gpio_mode.gpio_mode_in"/>
   <v1:configSetting configurationId="dac0.da" altId="dac0.da.none"/>
   <v1:configSetting configurationId="p201.gpio_mode" altId="p201.gpio_mode.gpio_mode_in"/>
-  <v1:configSetting configurationId="p401.gpio_mode" altId="p401.gpio_mode.gpio_mode_out.low"/>
+  <v1:configSetting configurationId="p401.gpio_mode" altId="p401.gpio_mode.gpio_mode_out.high"/>
   <v1:configSetting configurationId="p400.gpio_mode" altId="p400.gpio_mode.gpio_mode_out.high"/>
   <v1:configSetting configurationId="p200.gpio_mode" altId="p200.gpio_mode.gpio_mode_in"/>
   <v1:configSetting configurationId="p304" altId="p304.input"/>
@@ -153,7 +153,7 @@
   <v1:configSetting configurationId="p205.gpio_mode" altId="p205.gpio_mode.gpio_mode_out.low"/>
   <v1:configSetting configurationId="p102.gpio_mode" altId="p102.gpio_mode.disabled"/>
   <v1:configSetting configurationId="p402" altId="p402.input"/>
-  <v1:configSetting configurationId="p401" altId="p401.output.low"/>
+  <v1:configSetting configurationId="p401" altId="p401.output.high"/>
   <v1:configSetting configurationId="p400" altId="p400.output.high"/>
   <v1:configSetting configurationId="p205.gpio_drivecapacity" altId="p205.gpio_speed.gpio_speed_medium"/>
   <v1:configSetting configurationId="p111.gpio_drivecapacity" altId="p111.gpio_speed.gpio_speed_medium"/>
@@ -171,4 +171,5 @@
   <v1:configSetting configurationId="p304.gpio_irq" altId="p304.gpio_irq.gpio_irq_enabled"/>
   <v1:configSetting configurationId="irq0.irq09" altId="irq0.irq09.none"/>
   <v1:configSetting configurationId="p206.gpio_pupd" altId="p206.gpio_pupd.gpio_pupd_ip_up"/>
+  <v1:configSetting configurationId="p401.gpio_drivecapacity" altId="p401.gpio_speed.gpio_speed_medium"/>
 </v1:pinSettings>

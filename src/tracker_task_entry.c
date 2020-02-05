@@ -23,9 +23,9 @@
 #define SMS_CMD                     9           /*SMS commands used*/
 #define GNSS_OFF_LITMIT             1800        /*Longest time interval in seconds when GNSS module will not be shut down*/
 #define INIT_FAIL_WAKE_UP           900         /*Wake up interval after initialisation failure*/
-#define KEEP_AWAKE_TIME             300         /*Keep awake time */
+#define KEEP_AWAKE_TIME             60         /*Keep awake time */
 #define KEEP_AWAKE_TIME_EXT         3600        /*Keep awake time extended*/
-#define KEEP_ONLINE_TIME            1200         /*Keep online time*/
+#define KEEP_ONLINE_TIME            1200        /*Keep online time*/
 #define SLEEP_DURATION              3600        /*Sleep duration after online time expired*/
 #define GPRS_CONNECT_RETRY          3           /*GPRS connect attempts*/
 
@@ -1686,7 +1686,6 @@ static _Bool TelitPortalPostData(void)
 static void upload_data(void)
 {
     char *scp_result = NULL;
-    static uint32_t gprs_recon_counter = 0;
     static _Bool authenticated = false;
     _Bool result = false;
 
@@ -1710,31 +1709,39 @@ static void upload_data(void)
         /*Try to connect if not connected*/
         if(!modem_data.gprs_status)
         {
-            modem_data.gprs_status = GPRS_Connect(modem_data.ip_address);
-
-            /*Count how many times tried to connect*/
-            if(!modem_data.gprs_status)
+            for(uint8_t i = 0; i <= GPRS_CONNECT_RETRY; i++)
             {
-                gprs_recon_counter++;
-            }
-            /*We are connected to GPRS now, reset the counter*/
-            else
-            {
-                gprs_recon_counter = 0;
-                goto gprs_connected;
-            }
+                /*Wait 5000 milliseconds*/
+                tx_thread_sleep ((ULONG)(TX_TIMER_TICKS_PER_SECOND*5));
 
-            /*Roaming and no GPRS. Retry few times and try to change network*/
-            if(!modem_data.gprs_status && (modem_data.network_status == 5) && (gprs_recon_counter >= GPRS_CONNECT_RETRY))
-            {
-                /*reset counter*/
-                gprs_recon_counter = 0;
+                modem_data.gprs_status = GPRS_Connect(modem_data.ip_address);
 
-                /*change provider*/
-                if(ChangeProvider())
+                /*We are connected to GPRS*/
+                if(modem_data.gprs_status)
                 {
-                    /*Check if we are connected to GSM network*/
-                    WaitForNetwork();
+                    goto gprs_connected;
+                }
+
+                /*Roaming and no GPRS. Try to change network*/
+                if(!modem_data.gprs_status && (modem_data.network_status == 5) && (i == GPRS_CONNECT_RETRY))
+                {
+                    /*change provider*/
+                    if(ChangeProvider())
+                    {
+                        /*Check if we are connected to GSM network*/
+                        WaitForNetwork();
+
+                        /*Wait 5000 milliseconds*/
+                        tx_thread_sleep ((ULONG)(TX_TIMER_TICKS_PER_SECOND*5));
+
+                        /*Try to connect once more...*/
+                        modem_data.gprs_status = GPRS_Connect(modem_data.ip_address);
+
+                        if(modem_data.gprs_status)
+                        {
+                            goto gprs_connected;
+                        }
+                    }
                 }
             }
         }
@@ -1743,8 +1750,8 @@ static void upload_data(void)
         {
             gprs_connected:
 
-            /*Try AGPS only if connected to GPRS and we have less than 4 satellites from GNSS module*/
-            if(modem_data.agps_request && atoi(modem_data.gps_satt_in_use) < 4)
+            /*Try AGPS only if connected to GPRS and we have less than GNSS_NSAT satellites from GNSS module*/
+            if(modem_data.agps_request && atoi(modem_data.gps_satt_in_use) < GNSS_NSAT)
             {
                 _Bool status = false;
                 modem_data.agps_request = false;
@@ -1766,9 +1773,10 @@ static void upload_data(void)
                 }
             }
 
-            /*Authenticate only once per session*/
+            /*Upload*/
             if(!authenticated)
             {
+                /*Authenticate */
                 Authentication:
                 result = ModemOpenTcpSocket("api-de.devicewise.com", 80);
                 if(result)
@@ -1809,6 +1817,7 @@ static void battery_critical_shut_down(void)
     /*Shut down modules*/
     GNSS_Off();
     ModemOff();
+    sensors_power_off();
 
     modem_data.gsm_pwr_status = false;
     modem_data.gnss_pwr_status = false;
@@ -1947,6 +1956,10 @@ static void system_startup(void)
     tracker_settings.interval = 0;
     tracker_settings.repeat = 0;
     modem_data.agps_request = false;
+
+    /*Power for sensors*/
+    sensors_power_on();
+    tx_thread_sleep ((ULONG)(TX_TIMER_TICKS_PER_SECOND/10));
 
     /*Initialise BME280 Sensors*/
     bme280_init_status = bme280_init();
@@ -2134,6 +2147,9 @@ void tracker_task_entry(void)
     {
         /*Setup Telit modem and BOSH sensors always on wake up or startup*/
         system_startup();
+
+        /*Delete all stored messages*/
+        SCP_SendCommandWaitAnswer("AT+CMGD=1,4\r", "OK", 5000, 1);
 
         /*Initial alarm state is true*/
         alarm_flag = true;
@@ -2354,47 +2370,6 @@ void tracker_task_entry(void)
             {
                 while(tracker_settings.mode == CLOUD_MODE)
                 {
-                    /*Check if we still have to keep tracker awake*/
-                    current_time = user_function_get_rtc_time();
-                    if(((current_time - sensors_data.last_movement) > KEEP_AWAKE_TIME) && (tracker_settings.repeat == 0))
-                    {
-                        /*Read USB cable status*/
-                        g_ioport.p_api->pinRead(IOPORT_PORT_00_PIN_15, &p_pin_value);
-
-                        if(p_pin_value == IOPORT_LEVEL_LOW)
-                        {
-                            led_mode = CONSTANT_ON;
-
-                            /*Request AGPS */
-                            modem_data.agps_request = true;
-
-                            /*Upload to cloud*/
-                            upload_data();
-                            led_mode = CONSTANT_OFF;
-
-                            /*Enter Low Power Mode*/
-                            (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0);
-                        }
-                        /*Extend wake up time if the cable is attached*/
-                        else
-                        {
-                            if(((current_time - sensors_data.last_movement) > KEEP_AWAKE_TIME_EXT) && (tracker_settings.repeat == 0))
-                            {
-                                led_mode = CONSTANT_ON;
-
-                                /*Request AGPS */
-                                modem_data.agps_request = true;
-
-                                /*Upload to cloud*/
-                                upload_data();
-                                led_mode = CONSTANT_OFF;
-
-                                /*Enter Low Power Mode*/
-                                (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0);
-                            }
-                        }
-                    }
-
                     /*Do not allow to be online on batteries longer than certain time defined*/
                     g_ioport.p_api->pinRead(IOPORT_PORT_00_PIN_15, &p_pin_value);
                     if(p_pin_value == IOPORT_LEVEL_LOW)
@@ -2480,6 +2455,47 @@ void tracker_task_entry(void)
                             /*Alarm setup*/
                             user_function_set_rtc_alarm((time_t)tracker_settings.interval);
                             alarm_flag = false;
+                        }
+                    }
+
+                    /*Check if we still have to keep tracker awake*/
+                    current_time = user_function_get_rtc_time();
+                    if(((current_time - sensors_data.last_movement) > KEEP_AWAKE_TIME) && (tracker_settings.repeat == 0))
+                    {
+                        /*Read USB cable status*/
+                        g_ioport.p_api->pinRead(IOPORT_PORT_00_PIN_15, &p_pin_value);
+
+                        if(p_pin_value == IOPORT_LEVEL_LOW)
+                        {
+                            led_mode = CONSTANT_ON;
+
+                            /*Request AGPS */
+                            modem_data.agps_request = true;
+
+                            /*Upload to cloud*/
+                            upload_data();
+                            led_mode = CONSTANT_OFF;
+
+                            /*Enter Low Power Mode*/
+                            (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0);
+                        }
+                        /*Extend wake up time if the cable is attached*/
+                        else
+                        {
+                            if(((current_time - sensors_data.last_movement) > KEEP_AWAKE_TIME_EXT) && (tracker_settings.repeat == 0))
+                            {
+                                led_mode = CONSTANT_ON;
+
+                                /*Request AGPS */
+                                modem_data.agps_request = true;
+
+                                /*Upload to cloud*/
+                                upload_data();
+                                led_mode = CONSTANT_OFF;
+
+                                /*Enter Low Power Mode*/
+                                (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0);
+                            }
                         }
                     }
 

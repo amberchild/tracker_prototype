@@ -6,7 +6,7 @@
     <option key="#TargetName#" value="R7FS3A77C3A01CNB"/>
     <option key="#TargetARCHITECTURE#" value="cortex-m4"/>
     <option key="#RTOS#" value="Express Logic ThreadX"/>
-    <option key="#pinconfiguration#" value="low_power_pin_config.pincfg"/>
+    <option key="#pinconfiguration#" value="R7FS3A77C3A01CNB.pincfg"/>
     <option key="#SSPVersion#" value="1.7.0"/>
     <option key="#DefaultLinkerScript#" value="s3a7.ld"/>
     <option key="#SELECTED_TOOLCHAIN#" value="gcc-arm-embedded"/>
