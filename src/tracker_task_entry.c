@@ -256,36 +256,42 @@ static inline void ModemOn(void)
 {
     /*Turn on power for GSM Modem*/
     g_ioport.p_api->pinWrite(cell_pwr, IOPORT_LEVEL_HIGH);
+    modem_data.gsm_pwr_status = true;
 }
 
 static inline void ModemOff(void)
 {
     /*Turn off power for GSM Modem*/
     g_ioport.p_api->pinWrite(cell_pwr, IOPORT_LEVEL_LOW);
+    modem_data.gsm_pwr_status = false;
 }
 
 static inline void GNSS_On(void)
 {
     /*Turn on power for GNSS module*/
     g_ioport.p_api->pinWrite(gnss_pwr, IOPORT_LEVEL_HIGH);
+    modem_data.gnss_pwr_status = true;
 }
 
 static inline void GNSS_Off(void)
 {
     /*Turn off power for GNSS module*/
     g_ioport.p_api->pinWrite(gnss_pwr, IOPORT_LEVEL_LOW);
+    modem_data.gnss_pwr_status = false;
 }
 
 static inline void Charger_On(void)
 {
     /*Turn on Li-ion Battery Charger*/
     g_ioport.p_api->pinWrite(charger_ctrl, IOPORT_LEVEL_LOW);
+    modem_data.charger_pwr_status = true;
 }
 
 static inline void Charger_Off(void)
 {
     /*Turn off Li-ion Battery Charger*/
     g_ioport.p_api->pinWrite(charger_ctrl, IOPORT_LEVEL_HIGH);
+    modem_data.charger_pwr_status = false;
 }
 
 static inline void sensors_power_on(void)
@@ -296,7 +302,13 @@ static inline void sensors_power_on(void)
 
 static inline void sensors_power_off(void)
 {
-    /*Turn on power for the sensors*/
+    /*Close I2C*/
+    g_sf_i2c_bme280.p_api->close(g_sf_i2c_bme280.p_ctrl);
+    g_sf_i2c_bmx055_acc.p_api->close(g_sf_i2c_bmx055_acc.p_ctrl);
+    g_sf_i2c_bmx055_gyr.p_api->close(g_sf_i2c_bmx055_gyr.p_ctrl);
+    g_sf_i2c_bmx055_mag.p_api->close(g_sf_i2c_bmx055_mag.p_ctrl);
+
+    /*Turn off power*/
     g_ioport.p_api->pinWrite(sensor_pwr, IOPORT_LEVEL_LOW);
 }
 
@@ -321,17 +333,6 @@ static void GSM_deinit( void )
     g_modem_timer.p_api->close(g_modem_timer.p_ctrl);
 
     ModemOff();
-    modem_data.gsm_pwr_status = false;
-
-    /*Shut Down GNSS module only if intervals are longer than GNSS_OFF_LITMIT in RTC mode*/
-    if(tracker_settings.mode == POWER_SAVING_RTC)
-    {
-        if(tracker_settings.RTC_interval > GNSS_OFF_LITMIT)
-        {
-            GNSS_Off();
-            modem_data.gnss_pwr_status = false;
-        }
-    }
 }
 
 /*Low power module callback*/
@@ -342,11 +343,11 @@ void lpm_callback(sf_power_profiles_v2_callback_args_t *p_args)
     {
         g_ioport.p_api->pinWrite(leds.p_leds[0], IOPORT_LEVEL_HIGH);
         GSM_deinit();
-        /*Do not suspend BMX055 in movement detection mode*/
+        /*Turn off sensors to save power */
         if(tracker_settings.mode == POWER_SAVING_RTC)
         {
-            bmx055_deinit();
             sensors_power_off();
+            return;
         }
         bme280_deinit();
     }
@@ -1819,9 +1820,6 @@ static void battery_critical_shut_down(void)
     ModemOff();
     sensors_power_off();
 
-    modem_data.gsm_pwr_status = false;
-    modem_data.gnss_pwr_status = false;
-
     /*Enter Low Power Mode*/
      (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0);
 
@@ -1977,9 +1975,7 @@ static void system_startup(void)
     ModemOn();
     GNSS_On();
     Charger_On();
-    modem_data.gsm_pwr_status = true;
-    modem_data.gnss_pwr_status = true;
-    modem_data.charger_pwr_status = true;
+
     /*GSM and GNSS initialisation*/
     GSM_init();
     /*AT parser initialisation*/
@@ -2113,8 +2109,6 @@ static void system_startup(void)
         led_mode = CONSTANT_OFF;
         GSM_deinit();
         GNSS_Off();
-        modem_data.gsm_pwr_status = false;
-        modem_data.gnss_pwr_status = false;
         bme280_deinit();
         bmx055_deinit();
 
@@ -2140,7 +2134,6 @@ static void system_startup(void)
 void tracker_task_entry(void)
 {
     uint32_t i;
-    ssp_err_t err;
     time_t current_time;
     ioport_level_t p_pin_value;
 
@@ -2173,7 +2166,7 @@ void tracker_task_entry(void)
                     if(((current_time - sensors_data.last_movement) > KEEP_AWAKE_TIME) && (tracker_settings.repeat == 0))
                     {
                         /*Detach from the network*/
-                        SCP_SendCommandWaitAnswer("AT#SHDN\r\n", "OK", 2000, 1);
+                        SCP_SendCommandWaitAnswer("AT#SHDN\r", "OK", 2000, 1);
 
                         /*Enter Low Power Mode*/
                         (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0);
@@ -2188,14 +2181,6 @@ void tracker_task_entry(void)
                     /*Break if operational mode has changed*/
                     if(tracker_settings.mode != NORMAL_MODE)
                     {
-                        /*Accelerometer IRQ9 interrupt*/
-                        if(tracker_settings.mode == POWER_SAVING_RTC)
-                        {
-                            /*IRQ9 interrupt turn off*/
-                            err =  g_external_irq9.p_api->close(g_external_irq9.p_ctrl);
-                            if(err) { APP_ERR_TRAP(err); }
-                        }
-
                         /*Mode exit*/
                         goto mode_select;
                     }
@@ -2216,7 +2201,7 @@ void tracker_task_entry(void)
                         send_sms();
 
                         /*Detach from the network*/
-                        SCP_SendCommandWaitAnswer("AT#SHDN\r\n", "OK", 2000, 1);
+                        SCP_SendCommandWaitAnswer("AT#SHDN\r", "OK", 2000, 1);
 
                         /*Shut down*/
                         battery_critical_shut_down();
@@ -2266,9 +2251,6 @@ void tracker_task_entry(void)
                     /*Break if operational mode has changed*/
                     if(tracker_settings.mode != POWER_SAVING_RTC)
                     {
-                        /*Accelerometer IRQ9 interrupt*/
-                        err =  g_external_irq9.p_api->open(g_external_irq9.p_ctrl, g_external_irq9.p_cfg);
-                        if(err) { APP_ERR_TRAP(err); }
 
                         /*Mode exit*/
                         goto mode_select;
@@ -2303,13 +2285,13 @@ void tracker_task_entry(void)
                 if(tracker_settings.mode == POWER_SAVING_RTC)
                 {
                     /*Detach from the network*/
-                    SCP_SendCommandWaitAnswer("AT#SHDN\r\n", "OK", 2000, 1);
+                    SCP_SendCommandWaitAnswer("AT#SHDN\r", "OK", 2000, 1);
 
                     /*Alarm setup*/
                     user_function_set_rtc_alarm((time_t)tracker_settings.RTC_interval);
 
                     /*Enter Low Power Mode*/
-                    (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0); /*Enter low power mode*/
+                    (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0);
                 }
                 break;
             }
@@ -2334,14 +2316,6 @@ void tracker_task_entry(void)
                     /*Break if operational mode has changed*/
                     if(tracker_settings.mode != POWER_SAVING_ACC)
                     {
-                        /*Accelerometer IRQ9 interrupt*/
-                        if(tracker_settings.mode == POWER_SAVING_RTC)
-                        {
-                            /*IRQ9 interrupt turn off*/
-                            err =  g_external_irq9.p_api->close(g_external_irq9.p_ctrl);
-                            if(err) { APP_ERR_TRAP(err); }
-                        }
-
                         /*Mode exit*/
                         goto mode_select;
                     }
@@ -2375,10 +2349,10 @@ void tracker_task_entry(void)
                 if(tracker_settings.mode == POWER_SAVING_ACC)
                 {
                     /*Detach from the network*/
-                    SCP_SendCommandWaitAnswer("AT#SHDN\r\n", "OK", 2000, 1);
+                    SCP_SendCommandWaitAnswer("AT#SHDN\r", "OK", 2000, 1);
 
                     /*Enter Low Power Mode*/
-                    (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0); /*Enter low power mode*/
+                    (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0);
                 }
                 break;
             }
@@ -2400,9 +2374,8 @@ void tracker_task_entry(void)
                             bmx055_deinit();
 
                             /*Shut down modem*/
-                            SCP_SendCommandWaitAnswer("AT#SHDN\r\n", "OK", 2000, 1);
+                            SCP_SendCommandWaitAnswer("AT#SHDN\r", "OK", 2000, 1);
                             ModemOff();
-                            modem_data.gsm_pwr_status = false;
 
                             /*Setup RTC timer for wake up*/
                             user_function_set_rtc_alarm((time_t)SLEEP_DURATION);
@@ -2421,14 +2394,6 @@ void tracker_task_entry(void)
                     /*Break if operational mode has changed*/
                     if(tracker_settings.mode != CLOUD_MODE)
                     {
-                        /*Accelerometer IRQ9 interrupt*/
-                        if(tracker_settings.mode == POWER_SAVING_RTC)
-                        {
-                            /*IRQ9 interrupt turn off*/
-                            err =  g_external_irq9.p_api->close(g_external_irq9.p_ctrl);
-                            if(err) { APP_ERR_TRAP(err); }
-                        }
-
                         /*Mode exit*/
                         goto mode_select;
                     }
@@ -2496,7 +2461,7 @@ void tracker_task_entry(void)
                             led_mode = CONSTANT_OFF;
 
                             /*Detach from the network*/
-                            SCP_SendCommandWaitAnswer("AT#SHDN\r\n", "OK", 2000, 1);
+                            SCP_SendCommandWaitAnswer("AT#SHDN\r", "OK", 2000, 1);
 
                             /*Enter Low Power Mode*/
                             (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0);
@@ -2516,7 +2481,7 @@ void tracker_task_entry(void)
                                 led_mode = CONSTANT_OFF;
 
                                 /*Detach from the network*/
-                                SCP_SendCommandWaitAnswer("AT#SHDN\r\n", "OK", 2000, 1);
+                                SCP_SendCommandWaitAnswer("AT#SHDN\r", "OK", 2000, 1);
 
                                 /*Enter Low Power Mode*/
                                 (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0);
