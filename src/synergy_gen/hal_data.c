@@ -140,9 +140,9 @@ static const timer_cfg_t g_modem_timer_cfg =
 /* Instance structure to use this module. */
 const timer_instance_t g_modem_timer =
 { .p_ctrl = &g_modem_timer_ctrl, .p_cfg = &g_modem_timer_cfg, .p_api = &g_timer_on_agt };
-#if (0) != BSP_IRQ_DISABLED
+#if (1) != BSP_IRQ_DISABLED
 #if !defined(SSP_SUPPRESS_ISR_g_rtc0) && !defined(SSP_SUPPRESS_ISR_RTC)
-SSP_VECTOR_DEFINE(rtc_alarm_isr, RTC, ALARM);
+SSP_VECTOR_DEFINE( rtc_alarm_isr, RTC, ALARM);
 #endif
 #endif
 #if (BSP_IRQ_DISABLED) != BSP_IRQ_DISABLED
@@ -158,12 +158,12 @@ SSP_VECTOR_DEFINE( rtc_carry_isr, RTC, CARRY);
 rtc_instance_ctrl_t g_rtc0_ctrl;
 const rtc_cfg_t g_rtc0_cfg =
 { .clock_source = RTC_CLOCK_SOURCE_SUBCLK,
-  .hw_cfg = false,
+  .hw_cfg = true,
   .error_adjustment_value = 0,
   .error_adjustment_type = RTC_ERROR_ADJUSTMENT_NONE,
   .p_callback = rtc_alarm_callback,
   .p_context = &g_rtc0,
-  .alarm_ipl = (0),
+  .alarm_ipl = (1),
   .periodic_ipl = (BSP_IRQ_DISABLED),
   .carry_ipl = (1), };
 /* Instance structure to use this module. */

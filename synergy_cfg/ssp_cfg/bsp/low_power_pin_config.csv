@@ -158,7 +158,7 @@ SLCDC0: SEG23
 SPI1: RSPCK
 SSI1: SSISCK
 USBFS0: OVRCURB"
-"P205","23","GPIO","Medium","None","Output mode (Initial High)","CMOS","None","AGT1: AGTO
+"P205","23","GPIO","Medium","None","Output mode (Initial Low)","CMOS","None","AGT1: AGTO
 CGC0: CLKOUT
 CTSU0: TSCAP
 GPT4: GTIOCA

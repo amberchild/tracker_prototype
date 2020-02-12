@@ -140,9 +140,9 @@
   <v1:configSetting configurationId="p201" altId="p201.input"/>
   <v1:configSetting configurationId="p200" altId="p200.input"/>
   <v1:configSetting configurationId="p205" altId="p205.output.low"/>
-  <v1:configSetting configurationId="p204" altId="p204.output.low"/>
+  <v1:configSetting configurationId="p204" altId="p204.output.high"/>
   <v1:configSetting configurationId="p304.gpio_mode" altId="p304.gpio_mode.gpio_mode_in"/>
-  <v1:configSetting configurationId="p204.gpio_mode" altId="p204.gpio_mode.gpio_mode_out.low"/>
+  <v1:configSetting configurationId="p204.gpio_mode" altId="p204.gpio_mode.gpio_mode_out.high"/>
   <v1:configSetting configurationId="p303.gpio_mode" altId="p303.gpio_mode.gpio_mode_in"/>
   <v1:configSetting configurationId="p502" altId="p502.input"/>
   <v1:configSetting configurationId="p501" altId="p501.input"/>

@@ -146,7 +146,7 @@ SLCDC0: COM4
 SLCDC0: SEG00"
 "P200","27","GPIO","","None","Input mode","","","IRQ0: NMI"
 "P201","26","GPIO","","","Input mode","","None",""
-"P204","24","GPIO","Medium","","Output mode (Initial Low)","CMOS","None","AGT1: AGTIO
+"P204","24","GPIO","Medium","","Output mode (Initial High)","CMOS","None","AGT1: AGTIO
 CAC0: CACREF
 CTSU0: TS00
 GPT4: GTIOCB
