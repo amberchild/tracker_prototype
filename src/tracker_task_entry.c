@@ -22,7 +22,7 @@
 #define GNSS_SAT_WAIT               300         /*GNSS signal wait time in seconds*/
 #define SMS_CMD                     9           /*SMS commands used*/
 #define GNSS_OFF_LITMIT             1800        /*Longest time interval in seconds when GNSS module will not be shut down*/
-#define INIT_FAIL_WAKE_UP           900         /*Wake up interval after initialisation failure*/
+#define INIT_FAIL_WAKE_UP           3600         /*Wake up interval after initialisation failure*/
 #define KEEP_AWAKE_TIME             300         /*Keep awake time (detecting movement)*/
 #define KEEP_AWAKE_TIME_EXT         900         /*Keep awake time extended (detecting movement)*/
 #define KEEP_ONLINE_TIME            900         /*Keep online time*/
@@ -338,18 +338,30 @@ static void GSM_deinit( void )
 /*Low power module callback*/
 void lpm_callback(sf_power_profiles_v2_callback_args_t *p_args)
 {
+    ioport_level_t p_pin_value;
+
     /*Prepare to go to Low Power Mode*/
     if(p_args->event == SF_POWER_PROFILES_V2_EVENT_PRE_LOW_POWER)
     {
+        /*Turn off LED*/
         g_ioport.p_api->pinWrite(leds.p_leds[0], IOPORT_LEVEL_HIGH);
+
+        /*Turn off modem*/
         GSM_deinit();
+
         /*Turn off sensors to save power */
         if(tracker_settings.mode == POWER_SAVING_RTC)
         {
             sensors_power_off();
             return;
         }
-        bme280_deinit();
+
+        /*Turn off BME280 only if power still present*/
+        g_ioport.p_api->pinRead(IOPORT_PORT_04_PIN_01, &p_pin_value);
+        if(p_pin_value == IOPORT_LEVEL_HIGH)
+        {
+            bme280_deinit();
+        }
     }
 
     /*Returning from Low Power Mode*/
@@ -1690,7 +1702,14 @@ static void upload_data(void)
     static _Bool authenticated = false;
     _Bool result = false;
 
+    /*Check if we are still connected*/
     modem_data.network_status = NetworkRegistrationCheck();
+
+    if((modem_data.network_status != 1) && (modem_data.network_status != 5))
+    {
+        /*Wait for GSM network, 5 minutes at most*/
+        WaitForNetwork();
+    }
 
     /*registered to home network or registered as roaming is acceptable*/
     if((modem_data.network_status == 1) || (modem_data.network_status == 5))
@@ -1812,12 +1831,8 @@ static void upload_data(void)
 static void battery_critical_shut_down(void)
 {
 
-    /*Shut down accelerometer*/
-    bmx055_deinit();
-
     /*Shut down modules*/
     GNSS_Off();
-    ModemOff();
     sensors_power_off();
 
     /*Enter Low Power Mode*/
@@ -2106,11 +2121,8 @@ static void system_startup(void)
         init_failure:
 
         /*Prepare to sleep and wake up on next movement*/
-        led_mode = CONSTANT_OFF;
-        GSM_deinit();
         GNSS_Off();
-        bme280_deinit();
-        bmx055_deinit();
+        sensors_power_off();
 
         /*Read USB cable status*/
         g_ioport.p_api->pinRead(IOPORT_PORT_00_PIN_15, &p_pin_value);
@@ -2121,9 +2133,6 @@ static void system_startup(void)
             /*Enter Low Power Mode*/
             (void) g_sf_power_profiles_v2_common.p_api->lowPowerApply(g_sf_power_profiles_v2_common.p_ctrl, &g_sf_power_profiles_v2_low_power_0);
         }
-
-        /*LED blink for initialisation failure*/
-        led_mode = CONSTANT_OFF;
 
         /*Restart*/
         NVIC_SystemReset();
@@ -2370,12 +2379,11 @@ void tracker_task_entry(void)
                         current_time = user_function_get_rtc_time();
                         if(((current_time - modem_data.startup_time) > KEEP_ONLINE_TIME) && (tracker_settings.repeat == 0))
                         {
-                            /*Shut down accelerometer*/
-                            bmx055_deinit();
+                            /*Shut down sensors*/
+                            sensors_power_off();
 
-                            /*Shut down modem*/
+                            /*Detach from the network*/
                             SCP_SendCommandWaitAnswer("AT#SHDN\r", "OK", 2000, 1);
-                            ModemOff();
 
                             /*Setup RTC timer for wake up*/
                             user_function_set_rtc_alarm((time_t)SLEEP_DURATION);
