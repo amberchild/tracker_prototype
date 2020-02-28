@@ -377,6 +377,7 @@ static void IncomingCall(const char *pString)
 {
     UNUSED(pString);
     char *result = NULL;
+    char local_buff[50];
 
     /* Wait 50ms */
     tx_thread_sleep ((ULONG)(TX_TIMER_TICKS_PER_SECOND/20));
@@ -416,8 +417,22 @@ static void IncomingCall(const char *pString)
 
       if(result)
       {
-          /*Save the number with whole structure to Data flash*/
           TrackerSettingsSave();
+
+          /*Send SMS confirmation*/
+          memset(g_sms_buff, 0x00, sizeof(g_sms_buff));
+          memset(local_buff, 0x00, sizeof(local_buff));
+          strcat(g_sms_buff, "Saved: ");
+          strcat(g_sms_buff, tracker_settings.phone_number);
+
+          /*Termination symbol*/
+          strcat(g_sms_buff, "\032");
+
+          sprintf(local_buff, "AT+CMGS=%s\r", tracker_settings.phone_number);
+          SCP_SendDoubleCommandWaitAnswer(local_buff, g_sms_buff, ">", "OK", 2000, 1);
+
+          /*Wait 5000ms for modem to finish send SMS*/
+          tx_thread_sleep ((ULONG)(TX_TIMER_TICKS_PER_SECOND*5));
       }
 }
 
@@ -1327,6 +1342,7 @@ static void send_sms(void)
 {
     char * scp_result = NULL;
     char local_buff[50];
+    _Bool status = false;
 
     /*Network Status*/
     modem_data.network_status = NetworkRegistrationCheck();
@@ -1343,12 +1359,17 @@ static void send_sms(void)
             strcpy(modem_data.operator, scp_result);
         }
 
-        if(atoi(modem_data.gps_satt_in_use) >= 5)
+        /*Send SMS if we have location already*/
+        if(atoi(modem_data.gps_satt_in_use) > GNSS_NSAT)
         {
             memset(g_sms_buff, 0x00, sizeof(g_sms_buff));
             memset(local_buff, 0x00, sizeof(local_buff));
 
             sprintf(g_sms_buff, google_link, modem_data.gps_latitude, modem_data.gps_longitude);
+
+            strcat(g_sms_buff, "\r\n Accuracy: ");
+            strcat(g_sms_buff, modem_data.gps_precision);
+            strcat(g_sms_buff, "m.");
 
             /*Termination symbol*/
             strcat(g_sms_buff, "\032");
@@ -1358,29 +1379,105 @@ static void send_sms(void)
 
             /*Wait 5000ms for modem to finish send SMS*/
             tx_thread_sleep ((ULONG)(TX_TIMER_TICKS_PER_SECOND*5));
+
+            return;
         }
 
+        /*Check GPRS status*/
+        modem_data.gprs_status = GPRS_StatusCheck();
+
+        /*Try to connect if not connected*/
+        if(!modem_data.gprs_status)
+        {
+            for(uint8_t i = 0; i <= GPRS_CONNECT_RETRY; i++)
+            {
+                /*Wait 5000 milliseconds*/
+                tx_thread_sleep ((ULONG)(TX_TIMER_TICKS_PER_SECOND*5));
+
+                modem_data.gprs_status = GPRS_Connect(modem_data.ip_address);
+
+                /*We are connected to GPRS*/
+                if(modem_data.gprs_status)
+                {
+                    goto gprs_connected;
+                }
+
+                /*Roaming and no GPRS. Try to change network*/
+                if(!modem_data.gprs_status && (modem_data.network_status == 5) && (i == GPRS_CONNECT_RETRY))
+                {
+                    /*change provider*/
+                    if(ChangeProvider())
+                    {
+                        /*Check if we are connected to GSM network*/
+                        WaitForNetwork();
+
+                        /*Wait 5000 milliseconds*/
+                        tx_thread_sleep ((ULONG)(TX_TIMER_TICKS_PER_SECOND*5));
+
+                        /*Try to connect once more...*/
+                        modem_data.gprs_status = GPRS_Connect(modem_data.ip_address);
+
+                        if(modem_data.gprs_status)
+                        {
+                            goto gprs_connected;
+                        }
+                    }
+                }
+            }
+        }
+
+        /*Use AGPS*/
+        gprs_connected:
+        status = RequestAGPSLocation();
+        if(status)
+        {
+            /*Wait for AGPS data*/
+            modem_data.data_request = true;
+            for(uint8_t i = 180; i > 0; i--)
+            {
+                SCP_Process();
+                if(!modem_data.data_request)
+                {
+                    break;
+                }
+                tx_thread_sleep ((ULONG)(TX_TIMER_TICKS_PER_SECOND/10));
+            }
+
+            /*Error?*/
+            if((strcmp(modem_data.gps_latitude, "-0.833333") == 0) || (strcmp(modem_data.gps_longitude, "-0.833333") == 0))
+            {
+                goto error;
+            }
+
+            memset(g_sms_buff, 0x00, sizeof(g_sms_buff));
+            memset(local_buff, 0x00, sizeof(local_buff));
+
+            sprintf(g_sms_buff, google_link, modem_data.gps_latitude, modem_data.gps_longitude);
+
+            strcat(g_sms_buff, "\r\n Accuracy: ");
+            strcat(g_sms_buff, modem_data.gps_precision);
+            strcat(g_sms_buff, "m.");
+
+            /*Termination symbol*/
+            strcat(g_sms_buff, "\032");
+
+            sprintf(local_buff, "AT+CMGS=%s\r", tracker_settings.phone_number);
+            SCP_SendDoubleCommandWaitAnswer(local_buff, g_sms_buff, ">", "OK", 2000, 1);
+
+            /*Wait 5000ms for modem to finish send SMS*/
+            tx_thread_sleep ((ULONG)(TX_TIMER_TICKS_PER_SECOND*5));
+
+            return;
+
+        }
+
+        /*In case of error or no GPS or AGPS data*/
+        error:
         memset(g_sms_buff, 0x00, sizeof(g_sms_buff));
         memset(local_buff, 0x00, sizeof(local_buff));
 
-        if(atoi(modem_data.gps_satt_in_use) <= 4)
-        {
-            strcat(g_sms_buff, "No Satellites ");
-        }
+        sprintf(g_sms_buff, "Location not found. ");
 
-        else
-        {
-            strcat(g_sms_buff, modem_data.gps_latitude);
-            strcat(g_sms_buff, ", ");
-            strcat(g_sms_buff, modem_data.gps_longitude);
-            strcat(g_sms_buff, ", ");
-            strcat(g_sms_buff, modem_data.gps_altitude);
-            strcat(g_sms_buff, "m ");
-            strcat(g_sms_buff, modem_data.gps_speed);
-            strcat(g_sms_buff, "km/h ");
-        }
-
-        memset(local_buff, 0x00, sizeof(local_buff));
         sprintf(local_buff, "%.2f", sensors_data.bme280_temperature);
         strcat(local_buff, "C, ");
         strcat(g_sms_buff, local_buff);
@@ -1399,6 +1496,32 @@ static void send_sms(void)
         sprintf(local_buff, "%d", (int)modem_data.batt_voltage_mv);
         strcat(local_buff, "mV");
         strcat(g_sms_buff, local_buff);
+
+        /*Termination symbol*/
+        strcat(g_sms_buff, "\032");
+
+        sprintf(local_buff, "AT+CMGS=%s\r", tracker_settings.phone_number);
+        SCP_SendDoubleCommandWaitAnswer(local_buff, g_sms_buff, ">", "OK", 2000, 1);
+
+        /*Wait 5000ms for modem to finish send SMS*/
+        tx_thread_sleep ((ULONG)(TX_TIMER_TICKS_PER_SECOND*5));
+    }
+}
+
+static void sms_batt_warning(void)
+{
+    char local_buff[50];
+
+    /*Network Status*/
+    modem_data.network_status = NetworkRegistrationCheck();
+
+    /*registered to home network or registered as roaming is acceptable*/
+    if((modem_data.network_status == 1) || (modem_data.network_status == 5))
+    {
+        memset(g_sms_buff, 0x00, sizeof(g_sms_buff));
+        memset(local_buff, 0x00, sizeof(local_buff));
+
+        sprintf(g_sms_buff, "WARNING! Low battery, tracker will shut down");
 
         /*Termination symbol*/
         strcat(g_sms_buff, "\032");
@@ -1949,7 +2072,6 @@ static void system_startup(void)
     _Bool temp_result = false;
     _Bool init_OK = false;
     char * scp_result = NULL;
-    int32_t voltage = 0;
     ioport_level_t p_pin_value;
 
     /*Initialise GL865 V3.1 Modem and sensors*/
@@ -2067,14 +2189,6 @@ static void system_startup(void)
     memset(post_buff, 0, sizeof(post_buff));
     sprintf(post_buff, "AT+CGDCONT=1,\"IP\",\"%s\"\r", tracker_settings.APN);
     if (scp_result) scp_result = SCP_SendCommandWaitAnswer(post_buff, "OK", 500, 1);
-
-    /*Battery critical shut down*/
-    voltage = MeasureBattVoltage();
-    if((voltage <= SHUT_DOWN_VOLTAGE) && (voltage != 0))
-    {
-        SCP_SendCommandWaitAnswer("AT#SHDN\r\n", "OK", 2000, 1);
-        battery_critical_shut_down();
-    }
 
     /*GSM network and GNSS module status*/
     if (scp_result)
@@ -2204,15 +2318,12 @@ void tracker_task_entry(void)
                     modem_data.batt_voltage_mv = MeasureBattVoltage();
 
                     /*Battery critical shut down*/
-                    if(modem_data.batt_voltage_mv <= SHUT_DOWN_VOLTAGE)
+                    if((modem_data.batt_voltage_mv <= SHUT_DOWN_VOLTAGE) && (modem_data.batt_voltage_mv != 0))
                     {
-                        /*Send messages*/
-                        send_sms();
-
-                        /*Detach from the network*/
-                        SCP_SendCommandWaitAnswer("AT#SHDN\r", "OK", 2000, 1);
-
+                        led_mode = CONSTANT_OFF;
                         /*Shut down*/
+                        sms_batt_warning();
+                        SCP_SendCommandWaitAnswer("AT#SHDN\r\n", "OK", 2000, 1);
                         battery_critical_shut_down();
                     }
 
@@ -2284,6 +2395,16 @@ void tracker_task_entry(void)
                 /*Measure battery voltage*/
                 modem_data.batt_voltage_mv = MeasureBattVoltage();
 
+                /*Battery critical shut down*/
+                if((modem_data.batt_voltage_mv <= SHUT_DOWN_VOLTAGE) && (modem_data.batt_voltage_mv != 0))
+                {
+                    led_mode = CONSTANT_OFF;
+                    /*Shut down*/
+                    sms_batt_warning();
+                    SCP_SendCommandWaitAnswer("AT#SHDN\r\n", "OK", 2000, 1);
+                    battery_critical_shut_down();
+                }
+
                 /*Send messages*/
                 send_sms();
 
@@ -2347,6 +2468,16 @@ void tracker_task_entry(void)
 
                 /*Measure battery voltage*/
                 modem_data.batt_voltage_mv = MeasureBattVoltage();
+
+                /*Battery critical shut down*/
+                if((modem_data.batt_voltage_mv <= SHUT_DOWN_VOLTAGE) && (modem_data.batt_voltage_mv != 0))
+                {
+                    led_mode = CONSTANT_OFF;
+                    /*Shut down*/
+                    sms_batt_warning();
+                    SCP_SendCommandWaitAnswer("AT#SHDN\r\n", "OK", 2000, 1);
+                    battery_critical_shut_down();
+                }
 
                 /*Send messages*/
                 send_sms();
@@ -2426,6 +2557,8 @@ void tracker_task_entry(void)
                     {
                         led_mode = CONSTANT_OFF;
                         /*Shut down*/
+                        sms_batt_warning();
+                        SCP_SendCommandWaitAnswer("AT#SHDN\r\n", "OK", 2000, 1);
                         battery_critical_shut_down();
                     }
 
