@@ -22,7 +22,7 @@
 #define GNSS_SAT_WAIT               300         /*GNSS signal wait time in seconds*/
 #define SMS_CMD                     9           /*SMS commands used*/
 #define GNSS_OFF_LITMIT             1800        /*Longest time interval in seconds when GNSS module will not be shut down*/
-#define INIT_FAIL_WAKE_UP           3600         /*Wake up interval after initialisation failure*/
+#define INIT_FAIL_WAKE_UP           86400       /*Wake up interval after initialisation failure*/
 #define KEEP_AWAKE_TIME             300         /*Keep awake time (detecting movement)*/
 #define KEEP_AWAKE_TIME_EXT         900         /*Keep awake time extended (detecting movement)*/
 #define KEEP_ONLINE_TIME            900         /*Keep online time*/
